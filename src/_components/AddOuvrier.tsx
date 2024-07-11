@@ -7,6 +7,9 @@ interface AddOuvrierProps {
   typeOfEmployee: string;
 }
 const AddOuvrier = ({ typeOfEmployee }: AddOuvrierProps) => {
+  if (typeOfEmployee === "ouvrier") {
+  } else if (typeOfEmployee === "condidate") {
+  }
   const champs: Field[] = [
     { nom: "nom", type: "text", label: "Nom", value: "" },
     { nom: "prenom", type: "text", label: "Prénom", value: "" },
@@ -138,7 +141,7 @@ const AddOuvrier = ({ typeOfEmployee }: AddOuvrierProps) => {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-lg">
+      <div className="mx-24">
         <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
           Ajouter un ouvrier
         </h1>
@@ -156,9 +159,6 @@ const AddOuvrier = ({ typeOfEmployee }: AddOuvrierProps) => {
           onSubmit={handelSubmit}
           className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
         >
-          <p className="text-center text-lg font-medium">
-            Les informations de l'ouvrier
-          </p>
           {champs.map((champsItem) => {
             const ref = (() => {
               switch (champsItem.nom) {
@@ -217,8 +217,8 @@ const AddOuvrier = ({ typeOfEmployee }: AddOuvrierProps) => {
 
           <p className="text-center text-sm text-gray-500">
             Un problème?
-            <Link className="underline" href="/supportContact">
-              Contacter le support
+            <Link className="underline" href="/">
+              Contacter m
             </Link>
           </p>
         </form>

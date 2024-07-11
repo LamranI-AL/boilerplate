@@ -66,6 +66,10 @@ export interface Field {
   label: string;
   value: string;
 }
+export interface Counter {
+  _id: boolean;
+  count: string;
+}
 
 export interface Errors {
   [key: string]: string;

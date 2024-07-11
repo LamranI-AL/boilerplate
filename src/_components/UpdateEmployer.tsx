@@ -2,8 +2,6 @@
 import { GetEmployerById, UpdateEmployer } from "@/_services/GetEmployers";
 import { Employer, Errors, Field } from "@/_services/Interfaces";
 import React, { useEffect, useRef, useState } from "react";
-import AddPhotoProfile from "./addPhotoProfile";
-
 const UpdateEmployerSlice: React.FC<{ employerId: number }> = ({
   employerId,
 }) => {
@@ -27,7 +25,6 @@ const UpdateEmployerSlice: React.FC<{ employerId: number }> = ({
   const [errors, setErrors] = useState<Errors>({});
   const [isDesplyEroors, setIsDesplyEroors] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [isLoading, setIsloading] = useState(false);
 
   const FerstNameRef = useRef<HTMLInputElement>(null);
@@ -158,8 +155,8 @@ const UpdateEmployerSlice: React.FC<{ employerId: number }> = ({
   };
 
   return (
-    <div className="mx-auto max-w-screen-xl px-4  sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-lg">
+    <div className="mx-auto max-w-screen-xl px-4 mt-5 sm:px-6 lg:px-8">
+      <div className="mx-14">
         <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
           Mettre à jour un employé
         </h1>
@@ -172,14 +169,13 @@ const UpdateEmployerSlice: React.FC<{ employerId: number }> = ({
             L'employé a été mis à jour avec succès !
           </div>
         )}
-        <AddPhotoProfile />
 
         <form
           onSubmit={handelSubmit}
           className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
         >
           <p className="text-center text-lg font-medium">
-            Les informations de l'employé
+            {employer?.FerstName} {employer?.lastName}
           </p>
 
           {champs.map((champsItem) => {
@@ -253,12 +249,7 @@ const UpdateEmployerSlice: React.FC<{ employerId: number }> = ({
               type="submit"
               className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
             >
-              <svg
-                className="motion-reduce:hidden animate-spin ..."
-                viewBox="0 0 24 24"
-              >
-                Mettre à jour
-              </svg>
+              Mettre à jour
             </button>
           </div>
         </form>

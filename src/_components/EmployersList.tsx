@@ -1,23 +1,24 @@
 // components/EmployeeList.tsx
+// "use client";
 import React from "react";
 import EmployeeSlice from "./EmployeeSlice";
-import { GetEmployers } from "@/_services/GetEmployers";
 import { Employer } from "@/_services/Interfaces";
 interface Props {
   employers: Employer[];
 }
-const EmployeeList = ({ employers }: Props) => {
+const EmployeeList = async ({ employers }: Props) => {
   return (
     <div className="container mx-auto mt-10">
       <h1 className="text-2xl font-bold mb-5">Liste des Ouvriers</h1>
-      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+      {/* <Search /> */}
+      <table className="min-w-full divide-y-2 divide-gray-200 my-2 bg-white text-sm">
         <thead className="ltr:text-left rtl:text-right">
           <tr>
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Nom
+              Prénom
             </th>
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Prénom
+              Nom
             </th>
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
               CIN
@@ -33,8 +34,12 @@ const EmployeeList = ({ employers }: Props) => {
         </thead>
 
         <tbody className="divide-y divide-gray-200">
-          {employers.map((ouvrier: Employer) => (
-            <EmployeeSlice employer={ouvrier} />
+          {employers.map((ouvrier: Employer, key) => (
+            <EmployeeSlice
+              key={key}
+              employer={ouvrier}
+              isActive={!ouvrier.isRejected}
+            />
           ))}
         </tbody>
       </table>

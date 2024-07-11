@@ -15,6 +15,7 @@ export async function GetEmployers() {
 export async function GetEmployerById(id: string) {
   const response = await fetch(`http://localhost:3001/employers/${id}`, {
     method: "GET",
+    cache: "no-cache",
   });
   const data = await response.json();
   return data;

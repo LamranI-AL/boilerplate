@@ -47,14 +47,14 @@ async function page({ params }: Props) {
             type="button"
             className="rounded bg-red-50 px-4 py-2 text-sm font-medium text-red-600"
           >
-            Yes, I'm sure
+            Oui , je suis sure
           </button>
 
           <button
             type="button"
             className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
           >
-            <Link href={"/dashboard/activeEmployers"}>No, go back</Link>
+            <Link href={"/dashboard"}>List</Link>
           </button>
         </div>
       </div>
