@@ -1,44 +1,56 @@
-import { clerkClient } from "@clerk/clerk-sdk-node";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import employer from "@/_db/Employer.json";
+import { User } from "./Interfaces";
 
-async function checkIfEmailExistsInDatabase(email: string) {
-  const emailFound = employer.find((empl) => empl.email === email);
-  return emailFound ? true : false;
+export async function GetAllUsers() {
+  const response = await fetch("http://localhost:3001/users", {
+    method: "GET",
+    cache: "no-cache",
+  });
+  const data = await response.json();
+  return data;
+}
+export async function GetUserByID(id: string) {
+  const response = await fetch(`http://localhost:3001/users/${id}`, {
+    method: "GET",
+    cache: "no-cache",
+  });
+  const data = await response.json();
+  return data;
+}
+export async function CreatUser(newUser: User) {
+  const response = await fetch("http://localhost:3001/condidates", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newUser),
+  });
+  const data = await response.json();
+  return data;
+}
+// Update an existing users
+export async function UpdateUser(id: string, newUserUpdate: User) {
+  const response = await fetch(`http://localhost:3001/users/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newUserUpdate),
+  });
+  const data = await response.json();
+  return data;
 }
 
-export default async function GetCurrentUser() {
-  const { userId, orgRole, orgPermissions } = auth();
-  console.log(orgRole, orgPermissions);
-
-  if (!userId) {
-    console.log("You are not signed in");
-    redirect("/visitor"); // Redirige si l'utilisateur n'est pas connecté
-    return;
-  }
-
-  console.log("You are signed in");
-  const currentUser = await clerkClient.users.getUser(userId);
-  const userEmail = currentUser.emailAddresses[0].emailAddress;
-
-  const userActuell = employer.filter(
-    (employer) => employer.email === userEmail
-  );
-  const userRole = userActuell.map((emp) => emp.role).toString();
-
-  console.log(userRole);
-  console.log(userEmail);
-  console.log(currentUser);
-
-  const emailExistsInDatabase = await checkIfEmailExistsInDatabase(userEmail);
-  if (
-    !emailExistsInDatabase ||
-    (userRole !== "admin" && userRole !== "superAdmin")
-  ) {
-    redirect("/visitor"); // Redirige si l'email n'existe pas ou si le rôle n'est pas autorisé
-    return;
-  }
-
-  return userActuell;
+// Delete an user
+export async function DeleteUserFomDataBase(id: string) {
+  const response = await fetch(`http://localhost:3001/users/${id}`, {
+    method: "DELETE",
+  });
+  const data = await response.json();
+  return data;
+}
+export async function getUserFromDb(email: string) {
+  const response = await fetch("http://localhost:3001/users");
+  const users: User[] = await response.json();
+  console.log(users);
+  const user = users.filter((u) => {
+    return u.email === email;
+  });
+  console.log(user[0]);
+  return user[0];
 }

@@ -6,7 +6,7 @@ const ClientOnlyNavBar = () => {
   // const searchParams = useSearchParams();
   console.log(pathname);
 
-  return pathname !== "/visitor" ? <NavBar /> : null;
+  return pathname !== "/auth/login" ? <NavBar /> : null;
 };
 
 export default ClientOnlyNavBar;

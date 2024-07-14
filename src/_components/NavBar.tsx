@@ -3,15 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Search from "./Search";
+import { usePathname } from "next/navigation";
 
 function NavBar() {
+  const pathname = usePathname();
   const items = [
-    { key: "1", name: "Employés", link: "/dashboard" },
-    { key: "2", name: "Ajoute", link: "/ajouter-ouvrier" },
-    // { key: "3", name: "Recrutement", link: "/dashboard" },
-    { key: "4", name: "Condidate", link: "/condidats" },
+    { key: "1", name: "Acceuil", link: "/" },
+    { key: "2", name: "Employés", link: "/dashboard" },
+    { key: "2", name: "Condidate", link: "/condidats" },
   ];
-
   return (
     <header className="bg-white w-full transition-all duration-300 shadow-md">
       <div className="flex h-16 max-w-screen-xxl items-center justify-center gap-8 sm:px-6 lg:px-8">
@@ -25,7 +25,11 @@ function NavBar() {
             {items.map((navItem) => (
               <li key={navItem.key}>
                 <Link
-                  className="text-gray-500 transition hover:text-gray-500/75 active:font-bold visited:font-bold"
+                  className={`text-gray-500 transition ${
+                    pathname.includes(navItem.link) && pathname === navItem.link
+                      ? "text-cyan-600 shadow-md rounded-2xl  font-bold"
+                      : ""
+                  }  hover:text-gray-500/75 active:font-bold visited:font-bold`}
                   href={navItem.link}
                 >
                   {navItem.name}

@@ -8,7 +8,7 @@ interface Props {
 }
 const EmployeeList = async ({ employers }: Props) => {
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 ">
       <h1 className="text-2xl font-bold mb-5">Liste des Ouvriers</h1>
       {/* <Search /> */}
       <table className="min-w-full divide-y-2 divide-gray-200 my-2 bg-white text-sm">

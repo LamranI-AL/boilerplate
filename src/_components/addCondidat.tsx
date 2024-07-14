@@ -1,14 +1,17 @@
 "use client";
-import { CreateEmployer, GetEmployers } from "@/_services/GetEmployers";
-import { Employer, Errors, Field } from "@/_services/Interfaces";
+import { CreateCondidate, GetCondidates } from "@/_services/GetCondidats";
+import { Condidate, Errors, Field } from "@/_services/Interfaces";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import AlertSucces from "./alertSucces";
 
-const AddOuvrier = () => {
+const AddCondidate = () => {
   const champs: Field[] = [
     { nom: "nom", type: "text", label: "Nom", value: "" },
     { nom: "prenom", type: "text", label: "Prénom", value: "" },
     { nom: "cin", type: "text", label: "CIN", value: "" },
+    { nom: "email", type: "email", label: "Email", value: "" },
     { nom: "telephone", type: "text", label: "Téléphone", value: "" },
     {
       nom: "date-naissance",
@@ -16,7 +19,8 @@ const AddOuvrier = () => {
       label: "Date de naissance",
       value: "",
     },
-    { nom: "poste", type: "text", label: "Poste occupé", value: "" },
+    { nom: "poste", type: "text", label: "Poste appliqué", value: "" },
+    { nom: "motif", type: "text", label: "Motif d'application", value: "" },
   ];
 
   const [errors, setErrors] = useState<Errors>({});
@@ -26,9 +30,13 @@ const AddOuvrier = () => {
   const FerstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const cinRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
   const dateNaissanceRef = useRef<HTMLInputElement>(null);
   const phoneNumberRef = useRef<HTMLInputElement>(null);
   const posteRef = useRef<HTMLInputElement>(null);
+  const motifRef = useRef<HTMLInputElement>(null);
+  const isSucceededRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     FerstNameRef.current?.focus();
@@ -40,9 +48,12 @@ const AddOuvrier = () => {
     const FerstName = FerstNameRef.current?.value || "";
     const lastName = lastNameRef.current?.value || "";
     const cin = cinRef.current?.value || "";
+    const email = emailRef.current?.value || "";
     const dateNaissance = dateNaissanceRef.current?.value || "";
     const phoneNumber = phoneNumberRef.current?.value || "";
     const poste = posteRef.current?.value || "";
+    const motif = motifRef.current?.value || "";
+    const isSucceeded = isSucceededRef.current?.checked || false;
 
     if (FerstName.trim() === "") {
       setErrors((prevStat) => {
@@ -57,6 +68,11 @@ const AddOuvrier = () => {
     if (cin.trim() === "") {
       setErrors((prevStat) => {
         return { ...prevStat, cin: "Le champ CIN est requis" };
+      });
+    }
+    if (email.trim() === "") {
+      setErrors((prevStat) => {
+        return { ...prevStat, email: "Le champ email est requis" };
       });
     }
     if (phoneNumber.trim() === "") {
@@ -76,7 +92,15 @@ const AddOuvrier = () => {
       setErrors((prevStat) => {
         return {
           ...prevStat,
-          poste: "Le champ poste occupé est requis",
+          poste: "Le champ poste appliqué est requis",
+        };
+      });
+    }
+    if (motif.trim() === "") {
+      setErrors((prevStat) => {
+        return {
+          ...prevStat,
+          motif: "Le champ motif d'application est requis",
         };
       });
     }
@@ -91,39 +115,37 @@ const AddOuvrier = () => {
       resetForm();
       setShowSuccessAlert(true);
       setTimeout(() => setShowSuccessAlert(false), 3000); // Cache l'alerte après 3 secondes
+      router.push("/condidats/list");
     }
   };
 
   const creatUser = async () => {
-    const newOuvrier: Employer = {
+    const newCondidate: Condidate = {
       CIN: cinRef.current?.value ?? "",
-      FerstName: FerstNameRef.current?.value ?? "",
+      firstName: FerstNameRef.current?.value ?? "",
       lastName: lastNameRef.current?.value ?? "",
-      role: "user",
+      email: emailRef.current?.value ?? "",
       phoneNumber: phoneNumberRef.current?.value ?? "",
       dateNaissance: new Date(dateNaissanceRef.current?.value ?? ""),
-      email: "", // à remplir selon vos besoins
-      posteName: posteRef.current?.value ?? "",
-      isRejected: false,
-      isArchive: false,
-      raison: "",
-      createdAt: new Date(),
-      updateAt: new Date(),
-      dateSuppression: new Date(""), // ou null si non applicable
-      dateArchivage: new Date(""), // ou null si non applicable
-      dateReactivation: new Date(""),
+      posteApplique: posteRef.current?.value ?? "",
+      dateApplication: new Date(),
+      motifApply: motifRef.current?.value ?? "",
+      isSucceeded: isSucceededRef.current?.checked ?? false,
     };
-    console.log(newOuvrier);
-    await CreateEmployer(newOuvrier);
+    console.log(newCondidate);
+    await CreateCondidate(newCondidate);
   };
 
   const resetForm = () => {
     if (FerstNameRef.current) FerstNameRef.current.value = "";
     if (lastNameRef.current) lastNameRef.current.value = "";
     if (cinRef.current) cinRef.current.value = "";
+    if (emailRef.current) emailRef.current.value = "";
     if (dateNaissanceRef.current) dateNaissanceRef.current.value = "";
     if (phoneNumberRef.current) phoneNumberRef.current.value = "";
     if (posteRef.current) posteRef.current.value = "";
+    if (motifRef.current) motifRef.current.value = "";
+    if (isSucceededRef.current) isSucceededRef.current.checked = false;
   };
 
   const getError = (feildName: string) => {
@@ -138,11 +160,11 @@ const AddOuvrier = () => {
     <div className="mx-auto max-w-screen-xl px-4 mt-5 sm:px-6 lg:px-20 ">
       <div className="mx-24 px-48 ">
         <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
-          Ajouter un ouvrier
+          Ajouter un candidat
         </h1>
 
         <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-          Entrez toutes les informations de l'ouvrier
+          Entrez toutes les informations du candidat
         </p>
 
         <form
@@ -158,12 +180,16 @@ const AddOuvrier = () => {
                   return lastNameRef;
                 case "cin":
                   return cinRef;
+                case "email":
+                  return emailRef;
                 case "telephone":
                   return phoneNumberRef;
                 case "date-naissance":
                   return dateNaissanceRef;
                 case "poste":
                   return posteRef;
+                case "motif":
+                  return motifRef;
                 default:
                   return undefined;
               }
@@ -198,6 +224,24 @@ const AddOuvrier = () => {
             );
           })}
 
+          <div>
+            <label
+              htmlFor="isSucceeded"
+              className="text-gray-600 font-bold p-2"
+            >
+              Réussi le test ?
+            </label>
+            <div className="relative p-5  shadow-sm bg-gray-200">
+              <input
+                ref={isSucceededRef}
+                id="isSucceeded"
+                type="checkbox"
+                className="w-full rounded-lg  m-5 shadow-sm "
+              />
+              <p className="w-full text-center ">oui?</p>
+            </div>
+          </div>
+
           <button
             type="submit"
             className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
@@ -205,15 +249,21 @@ const AddOuvrier = () => {
             Ajouter
           </button>
           {showSuccessAlert && (
-            <div className="mb-4 rounded-lg bg-green-500 p-4 text-white text-center">
-              L'ouvrier a été ajouté avec succès !
+            <div>
+              <div className="mb-4 rounded-lg bg-green-500 p-4 text-white text-center">
+                Le candidat a été ajouté avec succès !
+              </div>
+              <AlertSucces
+                title="succès"
+                description=" Le candidat a été ajouté avec succès !"
+              />
             </div>
           )}
 
           <p className="text-center text-sm text-gray-500">
             Un problème?
             <Link className="underline" href="/">
-              Contacter m
+              Contacter nous
             </Link>
           </p>
         </form>
@@ -222,4 +272,4 @@ const AddOuvrier = () => {
   );
 };
 
-export default AddOuvrier;
+export default AddCondidate;

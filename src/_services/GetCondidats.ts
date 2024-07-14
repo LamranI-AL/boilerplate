@@ -1,7 +1,7 @@
 import { Condidate } from "./Interfaces";
 
 // Fetch all employers
-export async function GetCondidate() {
+export async function GetCondidates() {
   const response = await fetch("http://localhost:3001/condidates", {
     method: "GET",
     cache: "no-cache",

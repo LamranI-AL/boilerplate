@@ -1,24 +1,29 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import GetCurrentUser from "./_services/GetCurrentUser";
-
-const isProtectedRoute = createRouteMatcher([
-  "/dashboard",
-  "/ajouter-ouvrier",
-  "/",
-  "/visitor",
-  "/supportContact",
-]);
-
-export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) auth().protect();
-  // (has) => {
-  //   return (
-  //     has({ permission: "org:sys_memberships:manage" }) ||
-  //     has({ permission: "org:sys_domains_manage" })
-  //   );
-  // };
-});
-GetCurrentUser();
+import { getToken } from "next-auth/jwt";
+// import {  } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
+export default async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const isAuth = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+  const protectedPages = [
+    "/dashboard/:path",
+    "/ajouter-ouvrier",
+    "/condidats",
+    "/",
+  ];
+  const isProtectedRoute = protectedPages.some((route) => {
+    return pathname.startsWith(route);
+  });
+  if (isProtectedRoute && !isAuth) {
+    console.log("not auth");
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
+  console.log("is auth");
+  return NextResponse.next();
+}
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/dashboard/:path", "/ajouter-ouvrier", "/condidats", "/"],
+  // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };

@@ -6,6 +6,8 @@ import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import GlobalError from "./global-error";
 import { Suspense } from "react";
 import Loading from "./condidats/loading";
+// import { getServerSession } from "next-auth";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +21,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const session = await getServerSession();
   return (
     <html lang="en">
-      <ErrorBoundary fallback={<GlobalError />}>
-        <body className={inter.className}>
-          <ClientOnlyNavBar />
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-        </body>
-      </ErrorBoundary>
+      <ClerkProvider>
+        <ErrorBoundary fallback={<GlobalError />}>
+          <body className={inter.className}>
+            <ClientOnlyNavBar />
+            <Suspense fallback={<Loading />}>{children}</Suspense>
+          </body>
+        </ErrorBoundary>
+      </ClerkProvider>
     </html>
   );
 }

@@ -3,9 +3,8 @@ import React from "react";
 
 function page() {
   return (
-    <div>
-      {/* <AddCondidate /> */}
-      bienvenue dans espace condidate
+    <div className="">
+      <AddCondidate />
     </div>
   );
 }

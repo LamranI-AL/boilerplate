@@ -5,7 +5,7 @@ import React from "react";
 function AddOuvrierPage() {
   return (
     <div>
-      <AddOuvrier typeOfEmployee="ouvier" />
+      <AddOuvrier />
     </div>
   );
 }

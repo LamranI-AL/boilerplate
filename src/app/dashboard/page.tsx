@@ -3,6 +3,7 @@ import { GetEmployers } from "@/_services/GetEmployers";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { Employer } from "@/_services/Interfaces";
+import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
 
 export default async function Dashboard() {
   const employers = await GetEmployers();
@@ -12,6 +13,7 @@ export default async function Dashboard() {
   );
   return (
     <Suspense fallback={<Loading />}>
+      <StatistiqueCounterOfActiveEmployee isActive={true} />
       <EmployeeList employers={employersActive} />
     </Suspense>
   );

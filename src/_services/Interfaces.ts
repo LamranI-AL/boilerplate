@@ -59,6 +59,14 @@ export interface Poste {
   dateFin: Date;
   motifDebut: string;
 }
+export interface User {
+  _id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  dateChangeRole: Date;
+}
 
 export interface Field {
   nom: string;

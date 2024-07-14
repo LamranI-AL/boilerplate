@@ -1,11 +1,17 @@
-import GetCurrentUser from "../_services/GetCurrentUser";
+import { SignIn } from "@/_components/LoginForm";
+import UserControle from "@/_components/UserControle";
+import { auth } from "@/auth";
+// import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+// import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export default async function Home() {
-  // const user = await GetCurrentUser();
-  // console.log(user);
+  const session = await auth();
+  console.log(session);
+  if (!session) return;
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      hello from home page
+    <main>
+      <UserControle session={session} />
     </main>
   );
 }
