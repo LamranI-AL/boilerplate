@@ -47,9 +47,8 @@ const Search = () => {
 
   return (
     <div>
-      {/* Ajout de classes conditionnelles pour appliquer position: fixed */}
       <label
-        className={`relative block ${
+        className={`relative block p-3  ${
           isFocused ? "fixed top-0 left-0 w-full  z-50 p-4" : ""
         }`}
       >
@@ -60,7 +59,7 @@ const Search = () => {
         </div>
         <div className="flex gap-2">
           <input
-            className="placeholder:italic placeholder:text-slate-400 bloc bg-blue-50 w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:backdrop-blur-lg focus:ring-sky-500 focus:ring-1 sm:text-sm"
+            className="placeholder:italic  placeholder:text-slate-400 bloc  bg-blue-50 w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:backdrop-blur-lg focus:ring-sky-500 focus:ring-1 sm:text-sm"
             placeholder="Recherche a ouvrier ..."
             type="text"
             name="search"
@@ -80,25 +79,51 @@ const Search = () => {
         {showModal &&
           createPortal(
             <div className="modal fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm">
-              <div className="bg-gray-200 p-4 rounded-lg shadow-lg">
+              <div className="bg-gray-200  p-4 rounded-lg shadow-lg">
                 <div className="text-center font-bold mb-4">
                   Résultats de la recherche
                 </div>
                 <ul>
-                  {filteredEmployees.map((employee, index) => (
-                    <Link href={`/dashboard/${employee._id}/edit`} key={index}>
-                      <li className="p-2 border-b">
-                        {employee.FerstName} {employee.lastName} de CIN :{" "}
-                        {employee.CIN}
-                      </li>
-                    </Link>
-                  ))}
+                  {filteredEmployees
+                    .map((employee, index) => (
+                      <Link
+                        href={`/dashboard/${employee._id}/view`}
+                        onClick={() => setShowModal(false)}
+                        key={index}
+                      >
+                        <li className="p-2 border-b border-gray-900 hover:font-bold hover:text-cyan-500">
+                          {employee.FerstName} {employee.lastName} de CIN :{" "}
+                          {employee.CIN}
+                        </li>
+                      </Link>
+                    ))
+                    .slice(0, 5)}
                 </ul>
                 <button
-                  className="mt-4 bg-red-800 text-white py-2 px-4 rounded-md"
+                  className="group relative my-3 inline-flex items-center overflow-hidden rounded border border-current px-8 py-3 text-red-600 focus:outline-none focus:ring active:text-red-500"
                   onClick={() => setShowModal(false)}
                 >
-                  Fermer
+                  <span className="absolute -start-full transition-all group-hover:start-4">
+                    <svg
+                      className="size-5 rtl:rotate-180"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </span>
+
+                  <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    {" "}
+                    Fermer{" "}
+                  </span>
                 </button>
               </div>
             </div>,

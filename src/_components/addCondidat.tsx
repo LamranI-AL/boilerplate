@@ -1,12 +1,15 @@
 "use client";
 import { CreateCondidate, GetCondidates } from "@/_services/GetCondidats";
-import { Condidate, Errors, Field } from "@/_services/Interfaces";
+import { Condidate, Errors, Field, Session } from "@/_services/Interfaces";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import AlertSucces from "./alertSucces";
-
-const AddCondidate = () => {
+// import { useSession } from "next-auth/react";
+interface Props {
+  session: Session;
+}
+const AddCondidate = ({ session }: Props) => {
   const champs: Field[] = [
     { nom: "nom", type: "text", label: "Nom", value: "" },
     { nom: "prenom", type: "text", label: "Prénom", value: "" },
@@ -37,7 +40,6 @@ const AddCondidate = () => {
   const motifRef = useRef<HTMLInputElement>(null);
   const isSucceededRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-
   useEffect(() => {
     FerstNameRef.current?.focus();
     getData();
@@ -131,6 +133,12 @@ const AddCondidate = () => {
       dateApplication: new Date(),
       motifApply: motifRef.current?.value ?? "",
       isSucceeded: isSucceededRef.current?.checked ?? false,
+      creatDate: new Date(Date.now()),
+      updateDate: new Date(""),
+      creatUser: session.user.name,
+      deleteDate: new Date(""),
+      UserApdate: "",
+      UserDelete: "",
     };
     console.log(newCondidate);
     await CreateCondidate(newCondidate);

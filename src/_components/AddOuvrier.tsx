@@ -1,10 +1,16 @@
 "use client";
 import { CreateEmployer, GetEmployers } from "@/_services/GetEmployers";
-import { Employer, Errors, Field } from "@/_services/Interfaces";
+import { Employer, Errors, Field, Session, User } from "@/_services/Interfaces";
+import { auth } from "@/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-
-const AddOuvrier = () => {
+interface Props {
+  session: Session;
+}
+const AddOuvrier = ({ session }: Props) => {
+  const router = useRouter();
+  console.log(session.user?.name);
   const champs: Field[] = [
     { nom: "nom", type: "text", label: "Nom", value: "" },
     { nom: "prenom", type: "text", label: "Prénom", value: "" },
@@ -32,7 +38,6 @@ const AddOuvrier = () => {
 
   useEffect(() => {
     FerstNameRef.current?.focus();
-    getData();
   }, []);
 
   const getData = () => {
@@ -90,6 +95,7 @@ const AddOuvrier = () => {
       creatUser();
       resetForm();
       setShowSuccessAlert(true);
+      router.push("/dashboard");
       setTimeout(() => setShowSuccessAlert(false), 3000); // Cache l'alerte après 3 secondes
     }
   };
@@ -99,7 +105,7 @@ const AddOuvrier = () => {
       CIN: cinRef.current?.value ?? "",
       FerstName: FerstNameRef.current?.value ?? "",
       lastName: lastNameRef.current?.value ?? "",
-      role: "user",
+      // role: "user",
       phoneNumber: phoneNumberRef.current?.value ?? "",
       dateNaissance: new Date(dateNaissanceRef.current?.value ?? ""),
       email: "", // à remplir selon vos besoins
@@ -107,11 +113,12 @@ const AddOuvrier = () => {
       isRejected: false,
       isArchive: false,
       raison: "",
-      createdAt: new Date(),
+      createdAt: new Date(Date.now()),
       updateAt: new Date(),
-      dateSuppression: new Date(""), // ou null si non applicable
-      dateArchivage: new Date(""), // ou null si non applicable
-      dateReactivation: new Date(""),
+      creatUser: session.user?.name ?? "",
+      deleteDate: new Date(""),
+      UserDelete: "",
+      UserUpdate: "",
     };
     console.log(newOuvrier);
     await CreateEmployer(newOuvrier);

@@ -1,10 +1,12 @@
 import AddCondidate from "@/_components/addCondidat";
+import { auth } from "@/auth";
 import React from "react";
 
-function page() {
+async function page() {
+  const session = await auth();
   return (
     <div className="">
-      <AddCondidate />
+      <AddCondidate session={session} />
     </div>
   );
 }

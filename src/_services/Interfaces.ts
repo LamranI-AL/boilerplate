@@ -1,24 +1,24 @@
 export interface Employer {
-  // _id: number;
+  _id: string;
   CIN: string;
   FerstName: string;
   lastName: string;
-  role: string;
   phoneNumber: string;
   dateNaissance: Date;
   email: string;
   posteName: string;
-  //all faild in haut is required
+  creatUser: string;
   isRejected: boolean;
+  UserUpdate: string;
+  UserDelete: string;
+  deleteDate: Date;
   isArchive: boolean;
   raison: string;
   createdAt: Date;
   updateAt: Date;
-  dateSuppression: Date;
-  dateArchivage: Date;
-  dateReactivation: Date;
 }
 export interface Condidate {
+  _id: string;
   firstName: string;
   lastName: string;
   CIN: string;
@@ -29,27 +29,13 @@ export interface Condidate {
   dateApplication: Date;
   motifApply: string;
   isSucceeded: boolean;
+  creatUser: string;
+  creatDate: Date;
+  UserApdate: string;
+  updateDate: Date;
+  UserDelete: string;
+  deleteDate: Date;
 }
-// CIN: { type: String, required: true, unique: true },
-//   FerstName: { type: String, required: true },
-//   lastName: { type: String, required: true },
-
-//   phoneNumber: { type: String, required: true },
-//   role: {
-//     type: String,
-//     required: true,
-//     enum: ["admin", "superAdmin", "user"],
-//     default: "user",
-//   },
-//   dateNaissance: { type: Date, required: true },
-//   employerDepartment: { type: String },
-//   isRejected: { type: Boolean, default: false },
-//   raison: { type: String },
-//   createdAt: { type: Date, default: Date.now },
-//   updatedAt: { type: Date },
-//   dateSuppression: Date,
-//   dateArchivage: Date,
-//   dateReactivation: Date,
 export interface Poste {
   _id: number;
   name: string;
@@ -58,6 +44,15 @@ export interface Poste {
   dateDebut: Date;
   dateFin: Date;
   motifDebut: string;
+}
+export interface Session {
+  user: {
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+  };
+  expires: string;
 }
 export interface User {
   _id: number;
@@ -82,14 +77,3 @@ export interface Counter {
 export interface Errors {
   [key: string]: string;
 }
-// {
-//       "CIN":  "UC1122",
-//       "FerstName": "othmane",
-//       "lastName": "LAMRANI ALAOUI",
-//       "role": "user",
-//       "phoneNumber":  "066187356",
-//       "dateNaissance":"11-11-2000",
-//       "employerDepartment": "",
-//       "isRejected": false,
-//       "raison": ""
-//     }

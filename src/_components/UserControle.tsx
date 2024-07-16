@@ -13,9 +13,18 @@ interface Props {
 }
 function UserControle({ session }: Props) {
   console.log(session.user.role);
-  if (session.user.role === "admin") {
-    return;
-  }
+  // if (session.user.role === "admin") {
+  //   return;
+  // }
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+  };
+
+  console.log(getCurrentDate());
   return (
     <div
       // href="#"
@@ -45,7 +54,7 @@ function UserControle({ session }: Props) {
         <p className="mt-2 text-gray-700">
           Bonjour, {session.user.name} . Vous êtes connecté en tant
           qu'administrateur. Vous avez les droits complets pour créer, lire,
-          mettre à jour et supprimer (CRUD) les données.
+          mettre à jour et supprimer les données.
         </p>
         <p className="mt-2 text-gray-500">
           Toutes les actions effectuées sont enregistrées avec les dates et les
@@ -56,8 +65,10 @@ function UserControle({ session }: Props) {
 
       <dl className="mt-6 flex gap-4 sm:gap-6">
         <div className="flex flex-col-reverse">
-          <dt className="text-sm font-medium text-gray-600">Publilie</dt>
-          <dd className="text-xs text-gray-500">14 juil, 2024</dd>
+          {/* <dt className="text-sm font-medium text-gray-600">aujourd'hui : </dt> */}
+          <dd className="text-xs text-gray-500">
+            aujourd'hui :{getCurrentDate()}{" "}
+          </dd>
         </div>
 
         {/* <div className="flex flex-col-reverse">

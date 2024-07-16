@@ -1,12 +1,10 @@
 import EmployeeList from "@/_components/EmployersList";
-import { GetEmployers } from "@/_services/GetEmployers";
-import { Suspense } from "react";
-import Loading from "./loading";
-import { Employer } from "@/_services/Interfaces";
 import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
-import CondidatsHeader from "../condidats/_components/condidatsHeader";
+import { GetEmployers } from "@/_services/GetEmployers";
+import { Employer } from "@/_services/Interfaces";
+import React from "react";
 
-export default async function Dashboard() {
+async function page() {
   const employers = await GetEmployers();
   const employersActive = employers.filter(
     (employer: Employer) =>
@@ -14,7 +12,10 @@ export default async function Dashboard() {
   );
   return (
     <div>
-      <CondidatsHeader type="ouvrier" />
+      <StatistiqueCounterOfActiveEmployee isActive={true} />
+      <EmployeeList employers={employersActive} condidats={[]} />
     </div>
   );
 }
+
+export default page;

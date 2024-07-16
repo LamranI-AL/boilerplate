@@ -1,35 +1,34 @@
-// import AddPhotoProfile from "@/_components/AddPhotoProfile";
-import { Employer, Field } from "@/_services/Interfaces";
+import { Condidate } from "@/_services/Interfaces";
 import React from "react";
-interface EmployerCardProps {
-  employee: Employer;
+interface CondidateCardProps {
+  condidate: Condidate;
 }
-async function EmployerCard({ employee }: EmployerCardProps) {
-  const dateNaissance = new Date(employee.dateNaissance);
+function CondidateCard({ condidate }: CondidateCardProps) {
+  const dateNaissance = new Date(condidate.dateNaissance);
   return (
     <div className="flow-root rounded-lg border border-gray-100 py-3 shadow-md">
       <dl className="-my-3 divide-y divide-gray-100 text-sm">
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">Nom</dt>
-          <dd className="text-gray-700 sm:col-span-2">{employee.FerstName}</dd>
+          <dd className="text-gray-700 sm:col-span-2">{condidate.firstName}</dd>
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">Prénom</dt>
           <dd className="text-gray-700 sm:col-span-2">
-            {employee.lastName.toUpperCase()}
+            {condidate.lastName.toUpperCase()}
           </dd>
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">CIN</dt>
-          <dd className="text-gray-700 sm:col-span-2">{employee.CIN}</dd>
+          <dd className="text-gray-700 sm:col-span-2">{condidate.CIN}</dd>
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">Téléphone</dt>
           <dd className="text-gray-700 sm:col-span-2">
-            {employee.phoneNumber}
+            {condidate.phoneNumber}
           </dd>
         </div>
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
@@ -41,8 +40,8 @@ async function EmployerCard({ employee }: EmployerCardProps) {
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">Email</dt>
           <dd className="text-gray-700 sm:col-span-2">
-            {employee.email.length !== 0 ? (
-              employee.email
+            {condidate.email.length !== 0 ? (
+              condidate.email
             ) : (
               <p>en attend l'email ...</p>
             )}
@@ -50,22 +49,24 @@ async function EmployerCard({ employee }: EmployerCardProps) {
         </div>
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">Poste occupé</dt>
-          <dd className="text-gray-700 sm:col-span-2">{employee.posteName}</dd>
+          <dd className="text-gray-700 sm:col-span-2">
+            {condidate.posteApplique}
+          </dd>
         </div>
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">cree par : </dt>
-          <dd className="text-gray-700 sm:col-span-2">{employee.creatUser}</dd>
+          <dd className="text-gray-700 sm:col-span-2">{condidate.creatUser}</dd>
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">motif de post occupé</dt>
           <dd className="text-gray-700 sm:col-span-2">
-            {employee.raison.length !== 0 ? (
-              employee.raison
+            {condidate.motifApply.length !== 0 ? (
+              condidate.motifApply
             ) : (
               <p>
                 en attend un raison ou bien motivation de ocuppe le poste{" "}
-                {employee.posteName} ...
+                {condidate.posteApplique} ...
               </p>
             )}
           </dd>
@@ -75,4 +76,4 @@ async function EmployerCard({ employee }: EmployerCardProps) {
   );
 }
 
-export default EmployerCard;
+export default CondidateCard;

@@ -6,7 +6,6 @@ import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import GlobalError from "./global-error";
 import { Suspense } from "react";
 import Loading from "./condidats/loading";
-// import { getServerSession } from "next-auth";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });

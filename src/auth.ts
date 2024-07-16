@@ -11,7 +11,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET, // Assurez-vous que cette variable d'environnement est définie
-
   providers: [
     Credentials({
       name: "credentials",

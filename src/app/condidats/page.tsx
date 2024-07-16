@@ -1,11 +1,12 @@
 import AddCondidate from "@/_components/addCondidat";
 import React from "react";
+import CondidatsHeader from "./_components/condidatsHeader";
 
 function page() {
   return (
     <div>
       {/* <AddCondidate /> */}
-      bienvenue dans espace condidate
+      <CondidatsHeader type="condidate" />
     </div>
   );
 }

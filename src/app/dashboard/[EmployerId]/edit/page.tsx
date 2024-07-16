@@ -1,7 +1,6 @@
 // "use client";
 import UpdateEmployerSlice from "@/_components/UpdateEmployer";
-import { GetEmployerById } from "@/_services/GetEmployers";
-import { Employer } from "@/_services/Interfaces";
+import { auth } from "@/auth";
 import React from "react";
 interface Props {
   params: {
@@ -10,7 +9,10 @@ interface Props {
 }
 
 async function page({ params }: Props) {
-  return <UpdateEmployerSlice employerId={params.EmployerId} />;
+  const session = await auth();
+  return (
+    <UpdateEmployerSlice employerId={params.EmployerId} session={session} />
+  );
 }
 
 export default page;

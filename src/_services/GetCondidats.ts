@@ -15,28 +15,29 @@ export async function GetCondidates() {
 export async function GetCondidateById(id: string) {
   const response = await fetch(`http://localhost:3001/condidates/${id}`, {
     method: "GET",
+    cache: "no-cache",
   });
   const data = await response.json();
   return data;
 }
 
-// Create a new employer
-export async function CreateCondidate(newEmployer: Condidate) {
+// Create a  newCondidate
+export async function CreateCondidate(newCondidate: Condidate) {
   const response = await fetch("http://localhost:3001/condidates", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newEmployer),
+    body: JSON.stringify(newCondidate),
   });
   const data = await response.json();
   return data;
 }
 
 // Update an existing employer
-export async function UpdateCondidate(id: string, newEmployer: Condidate) {
+export async function UpdateCondidate(id: string, newCondidate: Condidate) {
   const response = await fetch(`http://localhost:3001/condidates/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newEmployer),
+    body: JSON.stringify(newCondidate),
   });
   const data = await response.json();
   return data;

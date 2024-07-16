@@ -1,6 +1,5 @@
 // "use client";
-import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
-import { Counter, Employer } from "@/_services/Interfaces";
+import { Employer } from "@/_services/Interfaces";
 import Link from "next/link";
 import React from "react";
 
@@ -13,12 +12,6 @@ const EmployesList: React.FC<EmployeeSliceProps> = async ({
   employer,
   isActive,
 }: EmployeeSliceProps) => {
-  let currentStateOfEmployee = true;
-  if (isActive === true) {
-    currentStateOfEmployee = true;
-  } else if (isActive === false) {
-    currentStateOfEmployee = false;
-  }
   return (
     <tr>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
@@ -36,21 +29,68 @@ const EmployesList: React.FC<EmployeeSliceProps> = async ({
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
         {employer.phoneNumber}
       </td>
-      <td className="whitespace-nowrap px-4 py-2 ">
+      <td className="whitespace-nowrap gap-3 px-4 py-2 ">
         <Link
+          className="group relative inline-flex items-center overflow-hidden rounded bg-zinc-700 px-6 py-2 text-white focus:outline-none focus:ring active:bg-zinc-500"
           href={`/dashboard/${employer._id}/view`}
-          className="inline-block mx-1 rounded bg-indigo-900 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
         >
-          voir
+          <span className="absolute -end-full transition-all group-hover:end-4">
+            <svg
+              className="size-5 rtl:rotate-180"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </span>
+
+          <span className="text-sm font-medium transition-all group-hover:me-4">
+            {" "}
+            Voir{" "}
+          </span>
         </Link>
-        {currentStateOfEmployee === true ? (
+        {isActive === true ? (
           <Link
+            className="group relative inline-flex items-center overflow-hidden rounded border border-current mx-3 px-6 py-2 text-red-800 focus:outline-none focus:ring active:text-red-700"
             href={`/dashboard/${employer._id}/delete`}
-            className="inline-block mx-1 rounded bg-red-900 px-4 py-2 text-xs font-medium text-gray-300 hover:bg-red-700"
           >
-            supprimer
+            <span className="absolute -end-full transition-all group-hover:end-4">
+              <svg
+                className="size-5 rtl:rotate-180"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </span>
+
+            <span className="text-sm font-medium transition-all group-hover:me-4">
+              {" "}
+              supprimer{" "}
+            </span>
           </Link>
-        ) : null}
+        ) : (
+          <p>
+            <strong>
+              {employer.UserDelete.length === 0 ? "admin" : employer.UserDelete}
+            </strong>{" "}
+            qui me supprimer
+          </p>
+        )}
       </td>
     </tr>
   );

@@ -4,13 +4,14 @@ import { Condidate } from "@/_services/Interfaces";
 import React from "react";
 
 async function page() {
-  const condidats: Condidate[] = await GetCondidates();
-  const condidateRetenus = condidats.filter(
-    (condidate) => condidate.isSucceeded === true
+  const condidates: Condidate[] = await GetCondidates();
+  const condidateNonRetenus = condidates.filter(
+    (condidate) => condidate.isSucceeded === false
   );
+
   return (
     <div>
-      <EmployeeList condidats={condidateRetenus} employers={[]} />
+      <EmployeeList condidats={condidateNonRetenus} employers={[]} />
     </div>
   );
 }

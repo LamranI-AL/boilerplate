@@ -61,7 +61,7 @@ async function Aside({ type }: Props) {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="h-6 w-6 text-cyan-700"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -110,12 +110,12 @@ async function Aside({ type }: Props) {
                     </Link>
                   ) : (
                     <Link
-                      href="/condidats"
+                      href="/condidats/list"
                       className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="h-6 w-6 text-green-800"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -137,7 +137,7 @@ async function Aside({ type }: Props) {
                 <li>
                   {type === "ouvrier" ? (
                     <Link
-                      href="/dashboard"
+                      href="/dashboard/list"
                       className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <svg
@@ -169,7 +169,7 @@ async function Aside({ type }: Props) {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="h-6 w-6 text-red-800"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
