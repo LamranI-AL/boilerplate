@@ -29,6 +29,7 @@ const AddCondidate = ({ session }: Props) => {
   const [errors, setErrors] = useState<Errors>({});
   const [isDesplyEroors, setIsDesplyEroors] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showDnagerAlert, setShowDangerAlert] = useState(false);
 
   const FerstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -55,7 +56,6 @@ const AddCondidate = ({ session }: Props) => {
     const phoneNumber = phoneNumberRef.current?.value || "";
     const poste = posteRef.current?.value || "";
     const motif = motifRef.current?.value || "";
-    const isSucceeded = isSucceededRef.current?.checked || false;
 
     if (FerstName.trim() === "") {
       setErrors((prevStat) => {
@@ -118,6 +118,10 @@ const AddCondidate = ({ session }: Props) => {
       setShowSuccessAlert(true);
       setTimeout(() => setShowSuccessAlert(false), 3000); // Cache l'alerte après 3 secondes
       router.push("/condidats/list");
+    } else {
+      setShowDangerAlert(true);
+      setTimeout(() => setShowDangerAlert(false), 3000); // Cache l'alerte après
+      router.refresh();
     }
   };
 
@@ -264,6 +268,17 @@ const AddCondidate = ({ session }: Props) => {
               <AlertSucces
                 title="succès"
                 description=" Le candidat a été ajouté avec succès !"
+              />
+            </div>
+          )}
+          {showDnagerAlert && (
+            <div>
+              <div className="mb-4 rounded-lg bg-red-500 p-4 text-white text-center">
+                Un problème est survenu lors de la saisie des informations
+              </div>
+              <AlertSucces
+                title="Échec"
+                description="Le candidat n'a pas été ajouté !"
               />
             </div>
           )}

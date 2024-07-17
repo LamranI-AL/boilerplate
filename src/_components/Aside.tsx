@@ -1,5 +1,5 @@
 // "use client";
-import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
+// import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
 import { Counter } from "@/_services/Interfaces";
 import Link from "next/link";
 import React from "react";
@@ -7,9 +7,9 @@ interface Props {
   type: string;
 }
 async function Aside({ type }: Props) {
-  const count: Counter[] = await GetCountActiveAndArchiveEmployer();
-  const activeCount: Counter[] = count.filter((item) => item._id === false);
-  const archiveCount: Counter[] = count.filter((item) => item._id === true);
+  // const count: Counter[] = await GetCountActiveAndArchiveEmployer();
+  // const activeCount: Counter[] = count.filter((item) => item._id === false);
+  // const archiveCount: Counter[] = count.filter((item) => item._id === true);
   let abv = "";
   if (type === "ouvrier") {
     abv = "OUV";
@@ -104,7 +104,7 @@ async function Aside({ type }: Props) {
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         ouvrier Archiver
                         <p className="font-bold text-yellow-700 mx-4">
-                          ({archiveCount[0].count})
+                          {/* ({archiveCount[0].count}) */}
                         </p>
                       </span>
                     </Link>
@@ -158,7 +158,7 @@ async function Aside({ type }: Props) {
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         ouvrier Actives
                         <p className="font-bold text-yellow-700 mx-4">
-                          ({activeCount[0].count})
+                          {/* ({activeCount[0].count}) */}
                         </p>
                       </span>
                     </Link>

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/macobate/gestion",
+  // basePath: "/macobate/gestion",
 };
 
 export default nextConfig;

@@ -9,8 +9,11 @@ export default async function middleware(request: NextRequest) {
   });
   const protectedPages = [
     "/dashboard/:path",
+    "/dashboard",
     "/ajouter-ouvrier",
+    "/ajouter-condidate",
     "/condidats",
+    "/condidats/:path",
     "/",
   ];
   const isProtectedRoute = protectedPages.some((route) => {
@@ -24,6 +27,14 @@ export default async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/dashboard/:path", "/ajouter-ouvrier", "/condidats", "/"],
+  matcher: [
+    "/dashboard/:path",
+    "/dashboard",
+    "/ajouter-ouvrier",
+    "/condidats",
+    "/",
+    "/ajouter-condidate",
+    "/ajouter-condidate",
+  ],
   // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };

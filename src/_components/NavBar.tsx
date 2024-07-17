@@ -17,12 +17,7 @@ function NavBar() {
       <div className="flex h-16 max-w-screen-xxl items-center justify-center gap-8 sm:px-6 lg:px-8">
         <Link className="block text-teal-600" href="/">
           <span className="sr-only">Home</span>
-          <Image
-            src="/macobate/gestion/vercel.svg"
-            alt="logo"
-            width={30}
-            height={30}
-          />
+          <Image src="/vercel.svg" alt="logo" width={30} height={30} />
         </Link>
 
         <nav aria-label="Global" className="flex-1">

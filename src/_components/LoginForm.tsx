@@ -2,8 +2,11 @@
 import { DoLoginCredentialsDataONE } from "@/actions/DoLoginCredentialsData";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import AlertDanger from "./alert-danger";
+import AlertSucces from "./alertSucces";
 export function SignIn() {
   const [error, setError] = useState<string | null>(null);
+  const [isSucces, setIsSucces] = useState<boolean | null>(false);
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Empêcher le rechargement de la page
@@ -12,10 +15,12 @@ export function SignIn() {
     try {
       await DoLoginCredentialsDataONE(data as {});
       setError(null);
+      setIsSucces(true);
       router.push("/dashboard");
-    } catch (err) {
+    } catch (err: unknown) {
       console.log(err);
-      setError(err.message);
+      setError("Erreur de connexion");
+      setIsSucces(false);
     }
   };
   return (
@@ -44,8 +49,22 @@ export function SignIn() {
           </button>
 
           {error && (
-            <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-              {error}
+            <div>
+              <div className="bg-red-500 mb-3 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+                {error}
+              </div>
+              <AlertDanger
+                title="Something went wrong "
+                description="user ou bien mot de passe incorrect"
+              />
+            </div>
+          )}
+          {isSucces && (
+            <div>
+              <AlertSucces
+                title="Bienvenue"
+                description="Votre login correct pour macobate gestion admin"
+              />
             </div>
           )}
         </form>

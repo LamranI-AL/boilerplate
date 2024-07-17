@@ -1,11 +1,11 @@
+import { baseUrl } from "./GetEmployers";
 import { Condidate } from "./Interfaces";
 
 // Fetch all employers
 export async function GetCondidates() {
-  const response = await fetch("http://localhost:3001/condidates", {
+  const response = await fetch(`${baseUrl}/api/condidats`, {
     method: "GET",
     cache: "no-cache",
-    // next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
   const data = await response.json();
   return data;
@@ -13,7 +13,7 @@ export async function GetCondidates() {
 
 // Fetch an employer by ID
 export async function GetCondidateById(id: string) {
-  const response = await fetch(`http://localhost:3001/condidates/${id}`, {
+  const response = await fetch(`${baseUrl}/api/condidats/${id}`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -23,7 +23,7 @@ export async function GetCondidateById(id: string) {
 
 // Create a  newCondidate
 export async function CreateCondidate(newCondidate: Condidate) {
-  const response = await fetch("http://localhost:3001/condidates", {
+  const response = await fetch(`${baseUrl}/api/condidats`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newCondidate),
@@ -34,7 +34,7 @@ export async function CreateCondidate(newCondidate: Condidate) {
 
 // Update an existing employer
 export async function UpdateCondidate(id: string, newCondidate: Condidate) {
-  const response = await fetch(`http://localhost:3001/condidates/${id}`, {
+  const response = await fetch(`${baseUrl}/api/condidats/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newCondidate),
@@ -45,7 +45,7 @@ export async function UpdateCondidate(id: string, newCondidate: Condidate) {
 
 // Delete an employer
 export async function DeleteCondidate(id: string) {
-  const response = await fetch(`http://localhost:3001/condidates/${id}`, {
+  const response = await fetch(`${baseUrl}/api/condidats/${id}`, {
     method: "DELETE",
   });
   const data = await response.json();

@@ -1,8 +1,11 @@
+import { baseUrl } from "./GetEmployers";
+
 export const GetCountActiveAndArchiveEmployer = async () => {
-  const response = await fetch("http://localhost:3001/reports/count", {
+  const response = await fetch(`${baseUrl}/reportsCount`, {
     method: "GET",
     cache: "no-cache",
   });
+  console.log(response);
   const data = await response.json();
   return data;
 };
