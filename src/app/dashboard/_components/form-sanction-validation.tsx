@@ -1,16 +1,22 @@
 // import React from "react";
 "use client";
-import { Sanction } from "@/_services/Interfaces";
+import { Employer, Sanction } from "@/_services/Interfaces";
 import { addSanction } from "@/actions/addSanction";
 import { sanctionSchema } from "@/lib/zodTypes";
+import { revalidatePath } from "next/cache";
 import toast from "react-hot-toast";
 // });
-function FormsSanctionValidation() {
+interface Props {
+  ouvrier: Employer;
+}
+function FormsSanctionValidation({ ouvrier }: Props) {
+  //   console.log(ouvrier._id);
   const addSanctionClient = async (formData: FormData) => {
     const sanction = formData.get("sanction") as string;
     const date = formData.get("date") as string;
     const faute = formData.get("faute") as string;
     const newSanction: Sanction | any = {
+      EmployerId: ouvrier._id,
       sanction: sanction,
       date: new Date(date),
       faute: faute,
@@ -23,6 +29,7 @@ function FormsSanctionValidation() {
 
       toast.dismiss(toastId);
       toast.success("Sanction added successfully");
+      revalidatePath(`/dashboard/${ouvrier._id}/view`);
     } else {
       let errorMsg = "";
       result.error.issues.forEach((issue) => {

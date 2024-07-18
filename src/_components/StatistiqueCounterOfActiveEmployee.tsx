@@ -8,15 +8,15 @@ export default async function StatistiqueCounterOfActiveEmployee({
   isActive,
 }: Props) {
   const count: Counter[] = await GetCountActiveAndArchiveEmployer();
-  const activeCount: Counter[] = count.filter((item) => item._id === false);
-  const archiveCount: Counter[] = count.filter((item) => item._id === true);
-  let currentStateOfEmployee = true;
-  if (isActive === true) {
-    currentStateOfEmployee = true;
-  } else if (isActive === false) {
-    currentStateOfEmployee = false;
+  let activeCount: Counter[] = [];
+  let archiveCount: Counter[] = [];
+  if (count.length !== 0) {
+    activeCount = count.filter((item) => item._id === false);
+    archiveCount = count.filter((item) => item._id === true);
   }
-
+  if (activeCount.length === 0 && archiveCount.length === 0) {
+    return;
+  }
   return (
     <div>
       <article className="rounded-lg border border-gray-100 m-4 bg-white p-6">
@@ -24,13 +24,11 @@ export default async function StatistiqueCounterOfActiveEmployee({
           <div>
             <p className="text-sm text-gray-500">
               Le Nomber de Ouvrier dans{" "}
-              {currentStateOfEmployee === true ? "Actif" : "Archive"}
+              {isActive === true ? "Actif" : "Archive"}
             </p>
 
             <p className="text-2xl font-medium text-gray-900">
-              {currentStateOfEmployee === true
-                ? activeCount[0].count
-                : archiveCount[0].count}
+              {isActive === true ? activeCount[0].count : archiveCount[0].count}
             </p>
           </div>
 

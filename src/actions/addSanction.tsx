@@ -1,10 +1,11 @@
 "use server";
 
+import { CreateSanction } from "@/_services/GetSanctions";
 import { Sanction } from "@/_services/Interfaces";
+import { revalidatePath } from "next/cache";
 
 export const addSanction = async (sanction: unknown) => {
-  //   const sanction = formData.get("sanction") as string;
-  //   const date = formData.get("date") as string;
-  //   const faut = formData.get("faut") as string;
+  await CreateSanction(sanction as Sanction);
+  revalidatePath(`/dashboard/${sanction.EmployerId}/view`);
   console.log(sanction);
 };

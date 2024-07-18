@@ -9,6 +9,31 @@ interface Props {
   condidats: Condidate[];
 }
 const EmployeeList = async ({ employers, condidats }: Props) => {
+  if (employers.length === 0 && condidats.length === 0) {
+    return (
+      <div className="text-red-600 text-center text-3xl">
+        <table className="min-w-full divide-y-2 divide-gray-200 my-2 bg-white text-sm">
+          <thead className="ltr:text-left rtl:text-right">
+            <tr>
+              <th className="whitespace-nowrap px-4 py-2 font-medium ">
+                Prénom
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium ">Nom</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium ">CIN</th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium ">
+                Date de Naissance
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium ">
+                Numéro de Téléphone
+              </th>
+              <th className="px-4 py-2"></th>
+            </tr>
+          </thead>
+          <tbody className="text-center">no data</tbody>
+        </table>
+      </div>
+    );
+  }
   return (
     <div className="container mx-auto mt-10 ">
       {employers.length === 0 ? (
@@ -16,8 +41,6 @@ const EmployeeList = async ({ employers, condidats }: Props) => {
       ) : (
         <h1 className="text-2xl font-bold mb-5">Liste des Ouvriers</h1>
       )}
-
-      {/* <Search /> */}
       <table className="min-w-full divide-y-2 divide-gray-200 my-2 bg-white text-sm">
         <thead className="ltr:text-left rtl:text-right">
           <tr>

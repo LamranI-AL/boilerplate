@@ -5,6 +5,7 @@ import React from "react";
 
 async function page() {
   const condidats: Condidate[] = await GetCondidates();
+
   const condidateRetenus = condidats.filter(
     (condidate) => condidate.isSucceeded === true
   );

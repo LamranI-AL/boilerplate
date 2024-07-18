@@ -10,16 +10,6 @@ export async function GetSanctions() {
   const data = await response.json();
   return data;
 }
-
-// Fetch an employer by ID
-// export async function GetSanctionById(id: string) {
-//   const response = await fetch(`${baseUrl}/api/sanctions/${id}`, {
-//     method: "GET",
-//     cache: "no-cache",
-//   });
-//   const data = await response.json();
-//   return data;
-// }
 export async function GetSanctionByIdEmploye(id: string) {
   const response = await fetch(`${baseUrl}/api/sanctions/${id}`, {
     method: "GET",

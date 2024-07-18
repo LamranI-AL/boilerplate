@@ -1,10 +1,12 @@
 import connectDb from "@/_db/db";
-import { Sanction } from "@/_services/Interfaces";
-import Sanctions from "@/models/Sanctions";
+import { Poste } from "@/_services/Interfaces";
+import Posts from "@/models/Posts";
+// import { Sanction } from "@/_services/Interfaces";
+// import Sanctions from "@/models/Sanctions";
 import { NextRequest, NextResponse } from "next/server";
 interface Props {
   params: {
-    sanctionId: string;
+    postId: string;
   };
 }
 // update one
@@ -19,33 +21,29 @@ export async function PUT(req: NextRequest, { params }: Props) {
     );
   }
   try {
-    const { sanctionId } = params;
-    if (!sanctionId) {
+    const { postId } = params;
+    if (!postId) {
       return NextResponse.json({ message: "ID is required" }, { status: 400 });
     }
-    const newSanctionUpdated: Partial<Sanction> = await req.json();
-    if (!newSanctionUpdated) {
+    const newPostUpdated: Partial<Poste> = await req.json();
+    if (!newPostUpdated) {
       return NextResponse.json({ message: "Invalid data" }, { status: 400 });
     }
 
-    const updatedSanction = await Sanctions.findByIdAndUpdate(
-      sanctionId,
-      newSanctionUpdated,
-      {
-        new: true,
-      }
-    );
+    const updatedPoste = await Posts.findByIdAndUpdate(postId, newPostUpdated, {
+      new: true,
+    });
 
-    if (!updatedSanction) {
+    if (!updatedPoste) {
       return NextResponse.json({
         message: "condidate non trouvé",
         status: 404,
       });
     }
 
-    return NextResponse.json(updatedSanction);
+    return NextResponse.json(updatedPoste);
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de sanction :", error);
+    console.error("Erreur lors de la mise à jour de poste :", error);
     return NextResponse.json({
       message: "Erreur lors de la requête",
       error: error instanceof Error ? error.message : "Erreur inconnue",
@@ -65,20 +63,20 @@ export async function DELETE(req: NextRequest, { params }: Props) {
     );
   }
   try {
-    const { sanctionId } = params;
+    const { postId } = params;
 
-    const deletedSanction = await Sanctions.findByIdAndDelete(sanctionId);
+    const deletedPost = await Posts.findByIdAndDelete(postId);
 
-    if (!deletedSanction) {
+    if (!deletedPost) {
       return NextResponse.json({
-        message: "condidate non trouvé",
+        message: "poste non trouvé",
         status: 404,
       });
     }
 
-    return NextResponse.json(deletedSanction);
+    return NextResponse.json(deletedPost);
   } catch (error) {
-    console.error("Erreur lors de la suppression de sanction :", error);
+    console.error("Erreur lors de la suppression de post :", error);
     return NextResponse.json({
       message: "Erreur lors de la requête",
       error: error instanceof Error ? error.message : "Erreur inconnue",
@@ -98,24 +96,21 @@ export async function GET(request: NextRequest, { params }: Props) {
     );
   }
   try {
-    const { sanctionId } = params;
-    if (!sanctionId) {
+    const { postId } = params;
+    if (!postId) {
       return NextResponse.json({ message: "ID is required" }, { status: 400 });
     }
 
-    const Sanction = await Sanctions.find({
-      EmployerId: sanctionId,
+    const post = await Posts.find({
+      EmployerId: postId,
     });
-    if (!Sanction) {
-      return NextResponse.json(
-        { message: "condidate not found" },
-        { status: 404 }
-      );
+    if (!post) {
+      return NextResponse.json({ message: "post not found" }, { status: 404 });
     }
 
-    return NextResponse.json(Sanction);
+    return NextResponse.json(post);
   } catch (error) {
-    console.error("Error retrieving Sanction:", error);
+    console.error("Error retrieving post:", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

@@ -5,10 +5,13 @@ import { Employer } from "@/_services/Interfaces";
 
 async function ArchiveEmployersPage() {
   const employers = await GetEmployers();
-  const employersActive = employers.filter(
-    (employer: Employer) =>
-      employer.isRejected === true && employer.isArchive === true
-  );
+  let employersActive: Employer[] = [];
+  if (employers.length !== 0) {
+    employersActive = employers.filter(
+      (employer: Employer) =>
+        employer.isRejected === true && employer.isArchive === true
+    );
+  }
   return (
     <div>
       <StatistiqueCounterOfActiveEmployee isActive={false} />

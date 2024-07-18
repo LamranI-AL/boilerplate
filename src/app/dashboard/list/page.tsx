@@ -5,11 +5,16 @@ import { Employer } from "@/_services/Interfaces";
 import React from "react";
 
 async function page() {
-  const employers = await GetEmployers();
-  const employersActive = employers.filter(
-    (employer: Employer) =>
-      employer.isRejected === false && employer.isArchive === false
-  );
+  const employers: Employer[] = await GetEmployers();
+  // const employers: Employer[] = [];
+  let employersActive: Employer[] = [];
+  if (employers.length !== 0) {
+    employersActive = employers.filter(
+      (employer: Employer) =>
+        employer.isRejected === false && employer.isArchive === false
+    );
+  }
+
   return (
     <div>
       <StatistiqueCounterOfActiveEmployee isActive={true} />
