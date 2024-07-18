@@ -1,13 +1,40 @@
 import UserControle from "@/_components/UserControle";
+import UserList from "@/_components/UserList";
+import {
+  GetAllUsers,
+  getUserFromDb,
+  UpdateUser,
+} from "@/_services/GetCurrentUser";
+import { Session, User } from "@/_services/Interfaces";
 import { auth } from "@/auth";
 export default async function Home() {
-  const session = await auth();
-  console.log(session);
+  const session: Session = await auth();
+  if (session !== null) {
+  }
+  // console.log(session);
   if (!session) return;
+  const currentUser: User = await getUserFromDb(session.user?.email as string);
+  const isSuperAdmin = currentUser.isSuperAdmin;
+  // console.log(isSuperAdmin);
+  const updateUser: User = {
+    ...currentUser,
+    lastLoginDate: new Date(Date.now()),
+  };
+  try {
+    await UpdateUser(currentUser._id, updateUser);
+    console.log("userUpdateSuccesfull");
+  } catch (error: unknown) {
+    throw new Error("error updating current user ... , error : " + error);
+    // console.log(error);
+    // console.log("user not updated ");
+  }
+  const users: User[] = await GetAllUsers();
+  const adminUser = users.filter((u) => u.isSuperAdmin === false);
+
   return (
     <main>
-      <UserControle session={session} />
-      {/* hello from home , bienvenue mr {session.user?.name} */}
+      <UserControle currentUser={currentUser} session={session} />
+      {isSuperAdmin && <UserList users={adminUser} />}
     </main>
   );
 }

@@ -1,18 +1,21 @@
+import Image from "next/image";
 import React from "react";
+// import othmaneImg from "@/images/othmane.jpg";
+import { User } from "@/_services/Interfaces";
+import Link from "next/link";
 interface Session {
   user: {
     name: string;
     email: string;
-    password: string;
-    role: string;
   };
   expires: string;
 }
 interface Props {
   session: Session;
+  currentUser: User;
 }
-function UserControle({ session }: Props) {
-  console.log(session.user.role);
+function UserControle({ session, currentUser }: Props) {
+  // console.log(session.user.role);
   // if (session.user.role === "admin") {
   //   return;
   // }
@@ -23,11 +26,11 @@ function UserControle({ session }: Props) {
     const day = String(now.getDate()).padStart(2, "0");
     return `${day}-${month}-${year}`;
   };
-
-  console.log(getCurrentDate());
+  // console.log(getCurrentDate());
+  const lastseenDate = new Date(currentUser.lastLoginDate);
   return (
-    <div
-      // href="#"
+    <Link
+      href={`/${currentUser._id}/edit`}
       className="relative block m-24 overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8"
     >
       <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
@@ -38,13 +41,17 @@ function UserControle({ session }: Props) {
             Bonjour monsieur {session.user.name}
           </h3>
 
-          <p className="mt-1 text-xs font-medium text-gray-600">admin</p>
+          <p className="mt-1 text-xs font-medium text-gray-600">
+            {currentUser.isSuperAdmin ? "super admin " : "admin"}
+          </p>
         </div>
 
         <div className="hidden sm:block sm:shrink-0">
-          <img
+          <Image
             alt=""
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+            src={"/othmane.jpg"}
+            width={20}
+            height={20}
             className="size-16 rounded-lg object-cover shadow-sm"
           />
         </div>
@@ -67,16 +74,20 @@ function UserControle({ session }: Props) {
         <div className="flex flex-col-reverse">
           {/* <dt className="text-sm font-medium text-gray-600">aujourd'hui : </dt> */}
           <dd className="text-xs text-gray-500">
-            aujourd'hui :{getCurrentDate()}{" "}
+            la date d'aujourd'hui :{getCurrentDate()}{" "}
           </dd>
         </div>
 
-        {/* <div className="flex flex-col-reverse">
-          <dt className="text-sm font-medium text-gray-600">Reading time</dt>
-          <dd className="text-xs text-gray-500">3 minute</dd>
-        </div> */}
+        <div className="flex flex-col-reverse">
+          {/* <dt className="text-sm font-medium text-gray-600">
+            derniere login :{" "}
+          </dt> */}
+          <dd className="text-xs text-gray-500">
+            derniere login : {lastseenDate.toLocaleTimeString().toString()}
+          </dd>
+        </div>
       </dl>
-    </div>
+    </Link>
   );
 }
 

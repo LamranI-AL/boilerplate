@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import AlertSucces from "./alertSucces";
-// import { useSession } from "next-auth/react";
+// import ButtonLoader from "./ButtonLoader";
+// // import { useSession } from "next-auth/react";
 interface Props {
   session: Session;
 }
@@ -30,6 +31,7 @@ const AddCondidate = ({ session }: Props) => {
   const [isDesplyEroors, setIsDesplyEroors] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showDnagerAlert, setShowDangerAlert] = useState(false);
+  const [isloading, setLoading] = useState(false);
 
   const FerstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -109,19 +111,20 @@ const AddCondidate = ({ session }: Props) => {
   };
 
   const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     setIsDesplyEroors(true);
     getData();
     if (Object.keys(errors).length === 0) {
       creatUser();
       resetForm();
-      setShowSuccessAlert(true);
       setTimeout(() => setShowSuccessAlert(false), 3000); // Cache l'alerte après 3 secondes
+
       router.push("/condidats/list");
     } else {
       setShowDangerAlert(true);
       setTimeout(() => setShowDangerAlert(false), 3000); // Cache l'alerte après
-      router.refresh();
+      setLoading(false);
     }
   };
 
@@ -146,6 +149,8 @@ const AddCondidate = ({ session }: Props) => {
     };
     console.log(newCondidate);
     await CreateCondidate(newCondidate);
+    setLoading(false);
+    setShowSuccessAlert(true);
   };
 
   const resetForm = () => {
@@ -248,18 +253,52 @@ const AddCondidate = ({ session }: Props) => {
                 ref={isSucceededRef}
                 id="isSucceeded"
                 type="checkbox"
-                className="w-full rounded-lg  m-5 shadow-sm "
+                className="w-full rounded-lg shadow-sm "
               />
               <p className="w-full text-center ">oui?</p>
             </div>
           </div>
 
-          <button
+          {/* <button
             type="submit"
             className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
           >
             Ajouter
+          </button> */}
+          <button
+            type="submit"
+            // onClick={handleLogin}
+            disabled={isloading}
+            className={`flex w-full items-center justify-center p-2 bg-green-600 text-white rounded ${
+              isloading ? "cursor-not-allowed" : "hover:bg-green-700"
+            }`}
+          >
+            {isloading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+            ) : (
+              "ajouter"
+            )}
           </button>
+          {/* <ButtonLoader isloading={isloading} title="ajouter" /> */}
           {showSuccessAlert && (
             <div>
               <div className="mb-4 rounded-lg bg-green-500 p-4 text-white text-center">

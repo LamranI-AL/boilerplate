@@ -6,7 +6,7 @@ import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import GlobalError from "./global-error";
 import { Suspense } from "react";
 import Loading from "./condidats/loading";
-import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,14 +23,13 @@ export default async function RootLayout({
   // const session = await getServerSession();
   return (
     <html lang="en">
-      <ClerkProvider>
-        <ErrorBoundary fallback={<GlobalError />}>
-          <body className={inter.className}>
-            <ClientOnlyNavBar />
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </body>
-        </ErrorBoundary>
-      </ClerkProvider>
+      <ErrorBoundary fallback={<GlobalError />}>
+        <body className={inter.className}>
+          <ClientOnlyNavBar />
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+          <Toaster position="top-right" />
+        </body>
+      </ErrorBoundary>
     </html>
   );
 }

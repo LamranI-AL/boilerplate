@@ -46,21 +46,24 @@ export interface Poste {
   motifDebut: string;
 }
 export interface Session {
-  user: {
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-  };
+  user: User;
   expires: string;
 }
+export interface Sanction {
+  _id: string;
+  EmployerId: string;
+  sanction: string;
+  date: Date;
+  faute: string;
+}
 export interface User {
-  _id: number;
+  _id: string;
   name: string;
   email: string;
   password: string;
-  role: string;
+  isSuperAdmin: boolean;
   dateChangeRole: Date;
+  lastLoginDate: Date;
 }
 
 export interface Field {

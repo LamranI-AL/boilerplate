@@ -4,23 +4,28 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AlertDanger from "./alert-danger";
 import AlertSucces from "./alertSucces";
+import ButtonLoader from "./ButtonLoader";
 export function SignIn() {
   const [error, setError] = useState<string | null>(null);
   const [isSucces, setIsSucces] = useState<boolean | null>(false);
+  const [isloading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     e.preventDefault(); // Empêcher le rechargement de la page
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     try {
       await DoLoginCredentialsDataONE(data as {});
       setError(null);
+      setIsLoading(false);
       setIsSucces(true);
       router.push("/dashboard");
     } catch (err: unknown) {
       console.log(err);
       setError("Erreur de connexion");
       setIsSucces(false);
+      setIsLoading(false);
     }
   };
   return (
@@ -41,12 +46,7 @@ export function SignIn() {
             type="password"
             placeholder="Password"
           />
-          <button
-            type="submit"
-            className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2"
-          >
-            Login
-          </button>
+          <ButtonLoader isloading={isloading} title="login" />
 
           {error && (
             <div>

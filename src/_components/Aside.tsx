@@ -1,5 +1,5 @@
 // "use client";
-// import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
+import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
 import { Counter } from "@/_services/Interfaces";
 import Link from "next/link";
 import React from "react";
@@ -7,9 +7,9 @@ interface Props {
   type: string;
 }
 async function Aside({ type }: Props) {
-  // const count: Counter[] = await GetCountActiveAndArchiveEmployer();
-  // const activeCount: Counter[] = count.filter((item) => item._id === false);
-  // const archiveCount: Counter[] = count.filter((item) => item._id === true);
+  const count: Counter[] = await GetCountActiveAndArchiveEmployer();
+  const activeCount: Counter[] = count.filter((item) => item._id === false);
+  const archiveCount: Counter[] = count.filter((item) => item._id === true);
   let abv = "";
   if (type === "ouvrier") {
     abv = "OUV";
@@ -33,11 +33,11 @@ async function Aside({ type }: Props) {
                   {type === "ouvrier" ? (
                     <Link
                       href="/ajouter-ouvrier"
-                      className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      className="group relative flex justify-center rounded px-2 py-1.5 text-cyan-900 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="h-6 w-6 "
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -83,28 +83,28 @@ async function Aside({ type }: Props) {
                 <li>
                   {type === "ouvrier" ? (
                     <Link
-                      href="/dashboard/ouvriers-archive"
-                      className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      href="/dashboard/list"
+                      className="group relative flex justify-center rounded px-2 py-1.5 text-green-900 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
-                        strokeWidth="1.5"
                         stroke="currentColor"
-                        className="h-5 w-5 mx-2"
+                        strokeWidth="2"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
+                          d="M12 14c-3.31 0-6 2.69-6 6v2h12v-2c0-3.31-2.69-6-6-6zm0-2c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3z"
                         />
                       </svg>
 
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                        ouvrier Archiver
+                        ouvrier Actives
                         <p className="font-bold text-yellow-700 mx-4">
-                          {/* ({archiveCount[0].count}) */}
+                          ({activeCount[0].count})
                         </p>
                       </span>
                     </Link>
@@ -137,28 +137,28 @@ async function Aside({ type }: Props) {
                 <li>
                   {type === "ouvrier" ? (
                     <Link
-                      href="/dashboard/list"
-                      className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      href="/dashboard/ouvriers-archive"
+                      className="group relative flex justify-center  rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
+                        strokeWidth="1.5"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        className="h-5 w-5 mx-2"
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M12 14c-3.31 0-6 2.69-6 6v2h12v-2c0-3.31-2.69-6-6-6zm0-2c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3z"
+                          d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
                         />
                       </svg>
 
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                        ouvrier Actives
+                        ouvrier Archiver
                         <p className="font-bold text-yellow-700 mx-4">
-                          {/* ({activeCount[0].count}) */}
+                          ({archiveCount[0].count})
                         </p>
                       </span>
                     </Link>

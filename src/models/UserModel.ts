@@ -6,5 +6,6 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   isSuperAdmin: { type: Boolean },
   dateChangeRole: Date,
+  lastLoginDate: Date,
 });
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+export default mongoose.models.Users || mongoose.model("Users", UserSchema);

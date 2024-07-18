@@ -4,6 +4,7 @@ import { Employer } from "@/_services/Interfaces";
 import EmployerCard from "../../_components/EmployerCard";
 import PostArchive from "../../_components/postArchive";
 import Link from "next/link";
+import FormsSanctionValidation from "../../_components/form-sanction-validation";
 interface Props {
   params: {
     EmployerId: number;
@@ -70,6 +71,7 @@ async function page({ params }: Props) {
               </Link>
             )}
           </div>
+          <FormsSanctionValidation />
         </div>
       </div>
       <PostArchive />

@@ -36,7 +36,6 @@ function NavBar() {
                 </Link>
               </li>
             ))}
-            {/* <Search /> */}
           </ul>
         </nav>
       </div>

@@ -1,0 +1,44 @@
+import React from "react";
+interface Props {
+  title: string;
+  isloading: boolean;
+}
+function ButtonLoader({ isloading, title }: Props) {
+  return (
+    <button
+      type="submit"
+      // onClick={handleLogin}
+      disabled={isloading}
+      className={`flex items-center justify-center p-2 bg-green-600 text-white rounded ${
+        isloading ? "cursor-not-allowed" : "hover:bg-green-700"
+      }`}
+    >
+      {isloading ? (
+        <svg
+          className="animate-spin h-5 w-5 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
+        </svg>
+      ) : (
+        `${title}`
+      )}
+    </button>
+  );
+}
+
+export default ButtonLoader;

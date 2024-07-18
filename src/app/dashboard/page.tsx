@@ -5,6 +5,7 @@ import Loading from "./loading";
 import { Employer } from "@/_services/Interfaces";
 import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
 import CondidatsHeader from "../condidats/_components/condidatsHeader";
+import { Toaster } from "react-hot-toast";
 
 export default async function Dashboard() {
   const employers = await GetEmployers();

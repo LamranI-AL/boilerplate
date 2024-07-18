@@ -11,7 +11,7 @@ async function ArchiveEmployersPage() {
   );
   return (
     <div>
-      {/* <StatistiqueCounterOfActiveEmployee isActive={false} /> */}
+      <StatistiqueCounterOfActiveEmployee isActive={false} />
       <EmployeeList employers={employersActive} condidats={[]} />
     </div>
   );

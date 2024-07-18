@@ -1,5 +1,5 @@
 import EmployeeList from "@/_components/EmployersList";
-// import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
+import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
 import { GetEmployers } from "@/_services/GetEmployers";
 import { Employer } from "@/_services/Interfaces";
 import React from "react";
@@ -12,7 +12,7 @@ async function page() {
   );
   return (
     <div>
-      {/* <StatistiqueCounterOfActiveEmployee isActive={true} /> */}
+      <StatistiqueCounterOfActiveEmployee isActive={true} />
       <EmployeeList employers={employersActive} condidats={[]} />
     </div>
   );

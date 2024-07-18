@@ -1,7 +1,7 @@
 import { baseUrl } from "./GetEmployers";
 
 export const GetCountActiveAndArchiveEmployer = async () => {
-  const response = await fetch(`${baseUrl}/reportsCount`, {
+  const response = await fetch(`${baseUrl}/api/reportsCount`, {
     method: "GET",
     cache: "no-cache",
   });
