@@ -1,12 +1,11 @@
 import connectDb from "@/_db/db";
-import { Poste } from "@/_services/Interfaces";
+import { Poste } from "@/interfaces/Interfaces";
 import Posts from "@/models/Posts";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     await connectDb();
-    // get data form Employees collection
     const Postes: Poste[] = await Posts.find();
     return NextResponse.json(Postes);
   } catch (error) {

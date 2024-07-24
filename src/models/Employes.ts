@@ -1,6 +1,4 @@
-// const mongoose = require("mongoose");
-
-import mongoose, { model } from "mongoose";
+import mongoose from "mongoose";
 
 const EmployerSchema = new mongoose.Schema({
   CIN: { type: String, required: true, unique: true },
@@ -12,6 +10,7 @@ const EmployerSchema = new mongoose.Schema({
   dateNaissance: { type: Date, required: true },
   employerDepartment: { type: String },
   isRejected: { type: Boolean, default: false },
+  rejectMotif: { type: String },
   isArchive: { type: Boolean },
   raison: { type: String },
   createdAt: { type: Date, default: Date.now },
@@ -21,7 +20,5 @@ const EmployerSchema = new mongoose.Schema({
   UserDelete: { type: String },
   deleteDate: { type: Date },
 });
-// const EmployerModel = mongoose.model("EmployerModel", EmployerSchema);
-// module.exports = EmployerModel;
 export default mongoose.models.EmployerModel ||
   mongoose.model("EmployerModel", EmployerSchema);

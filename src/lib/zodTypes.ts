@@ -29,3 +29,114 @@ export const sanctionSchema = z.object({
       message: "La date doit être dans le passé ou bien actuelle",
     }),
 });
+export const userSchema = z.object({
+  _id: z.string().optional(),
+  nom: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de nom.",
+    })
+    .max(50, {
+      message: "La nom doit contenir moins de 50 caractères.",
+    }),
+  prenom: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de prenom.",
+    })
+    .max(50, {
+      message: "La prenom doit contenir moins de 50 caractères.",
+    }),
+  email: z
+    .string()
+    .trim()
+    .email({ message: "Veuillez remplir le champ de email." })
+    .max(30, { message: "La email doit contenir moins de 50 caractères " }),
+  lastPassword: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de ancienn password.",
+    })
+    .max(50, {
+      message: "Le password doit contenir moins de 50 caractères.",
+    }),
+  newPassword: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de nouveaux password.",
+    })
+    .max(50, {
+      message: "Le password  doit contenir moins de 50 caractères.",
+    }),
+});
+
+export const ComentSchema = z.object({
+  _id: z.string().optional(),
+  commentContent: z
+    .string()
+    .min(5, {
+      message: "Le commentaire doit contenir au moins 5 caractères.",
+    })
+    .max(100, {
+      message: "Le commentaire doit contenir moins de 100 caractères.",
+    }),
+});
+export const posteSchema = z.object({
+  _id: z.string().optional(),
+  name: z
+    .string()
+    .min(1, {
+      message: "Le nom doit contenir au moins 1 caractère.",
+    })
+    .max(50, {
+      message: "Le nom doit contenir moins de 50 caractères.",
+    }),
+  date: z.date(),
+  motif: z
+    .string()
+    .min(1, {
+      message: "Le nom doit contenir au moins 1 caractère.",
+    })
+    .max(50, {
+      message: "Le nom doit contenir moins de 50 caractères.",
+    }),
+});
+export const adminSchema = z.object({
+  _id: z.string().optional(),
+  name: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de fullname.",
+    })
+    .max(50, {
+      message: "La prenom doit contenir moins de 50 caractères.",
+    }),
+  email: z
+    .string()
+    .trim()
+    .email({ message: "Veuillez remplir le champ de email Acces." })
+    .max(30, { message: "La email doit contenir moins de 50 caractères " }),
+  password: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de password.",
+    })
+    .max(50, {
+      message: "Le password doit contenir moins de 50 caractères.",
+    }),
+  passwordConfirm: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de confirme password.",
+    })
+    .max(50, {
+      message: "Le password  doit contenir moins de 50 caractères.",
+    }),
+});

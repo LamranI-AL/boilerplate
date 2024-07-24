@@ -1,5 +1,6 @@
 import connectDb from "@/_db/db";
-import { Employer } from "@/_services/Interfaces";
+import { Employer } from "@/interfaces/Interfaces";
+// import { Employer } from "@/_services/Interfaces";
 import Employes from "@/models/Employes";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -1,5 +1,5 @@
 import { baseUrl } from "./GetEmployers";
-import { Sanction } from "./Interfaces";
+import { Sanction } from "../interfaces/Interfaces";
 
 // Fetch all employers
 export async function GetSanctions() {

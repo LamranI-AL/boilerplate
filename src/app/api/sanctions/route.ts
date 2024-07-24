@@ -1,8 +1,6 @@
 import connectDb from "@/_db/db";
-import { Sanction } from "@/_services/Interfaces";
+import { Sanction } from "@/interfaces/Interfaces";
 import Sanctions from "@/models/Sanctions";
-// import { Condidate } from "@/_services/Interfaces";
-// import Condidats from "@/models/Condidats";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {

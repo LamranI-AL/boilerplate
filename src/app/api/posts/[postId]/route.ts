@@ -1,5 +1,6 @@
 import connectDb from "@/_db/db";
-import { Poste } from "@/_services/Interfaces";
+import { Poste } from "@/interfaces/Interfaces";
+// import { Poste } from "@/_services/Interfaces";
 import Posts from "@/models/Posts";
 // import { Sanction } from "@/_services/Interfaces";
 // import Sanctions from "@/models/Sanctions";

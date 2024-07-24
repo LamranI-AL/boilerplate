@@ -1,7 +1,12 @@
 "use client";
 import { CreateEmployer, GetEmployers } from "@/_services/GetEmployers";
-import { Employer, Errors, Field, Session, User } from "@/_services/Interfaces";
-import { auth } from "@/auth";
+import {
+  Employer,
+  Errors,
+  Field,
+  Poste,
+  Session,
+} from "@/interfaces/Interfaces";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -95,7 +100,7 @@ const AddOuvrier = ({ session }: Props) => {
       creatUser();
       resetForm();
       setShowSuccessAlert(true);
-      router.push("/dashboard");
+      router.push("/dashboard/list");
       setTimeout(() => setShowSuccessAlert(false), 3000); // Cache l'alerte après 3 secondes
     }
   };
@@ -122,8 +127,8 @@ const AddOuvrier = ({ session }: Props) => {
     };
     console.log(newOuvrier);
     await CreateEmployer(newOuvrier);
+    
   };
-
   const resetForm = () => {
     if (FerstNameRef.current) FerstNameRef.current.value = "";
     if (lastNameRef.current) lastNameRef.current.value = "";

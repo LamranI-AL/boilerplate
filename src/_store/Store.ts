@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Employer } from "./Interfaces";
+import { Employer } from "../interfaces/Interfaces";
 
 type SearchStoreType = {
   currentSearch: string;

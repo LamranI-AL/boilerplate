@@ -1,4 +1,4 @@
-import { Condidate } from "@/_services/Interfaces";
+import { Condidate } from "@/interfaces/Interfaces";
 import Link from "next/link";
 import React from "react";
 interface EmployeeSliceProps {
@@ -20,6 +20,9 @@ function CondidateSlice({ condidate, isSucess }: EmployeeSliceProps) {
       </td>
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
         {new Date(condidate.dateNaissance).toLocaleDateString()}
+      </td>
+      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+        {condidate.posteApplique}
       </td>
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
         {condidate.phoneNumber}

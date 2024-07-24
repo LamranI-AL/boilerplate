@@ -1,10 +1,11 @@
 import { GetEmployerById } from "@/_services/GetEmployers";
-import { Employer } from "@/_services/Interfaces";
+import { Employer } from "@/interfaces/Interfaces";
 import EmployerCard from "../../_components/EmployerCard";
 import PostArchive from "../../_components/postArchive";
 import Link from "next/link";
 import FormsSanctionValidation from "../../_components/form-sanction-validation";
 import SanctionList from "@/_components/sanctions-list";
+import FormsPosteValidation from "../../_components/form-post-validation";
 interface Props {
   params: {
     EmployerId: number;
@@ -15,7 +16,7 @@ async function page({ params }: Props) {
   return (
     <section className="">
       {Object.keys(ouvrier).length === 0 ? (
-        <div className="text-red-600">No dats</div>
+        <div className="text-red-600">No data</div>
       ) : (
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="lg:py-12">
@@ -74,10 +75,16 @@ async function page({ params }: Props) {
                 </Link>
               )}
             </div>
-            <FormsSanctionValidation ouvrier={ouvrier} />
+            {ouvrier.isRejected === false && (
+              <FormsSanctionValidation ouvrier={ouvrier} />
+            )}
+
             <SanctionList ouvrier={ouvrier} />
+            {ouvrier.isRejected === false && (
+              <FormsPosteValidation ouvrier={ouvrier} />
+            )}
+            <PostArchive ouvrier={ouvrier} />
           </div>
-          <PostArchive />
         </div>
       )}
     </section>

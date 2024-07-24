@@ -1,6 +1,6 @@
 "use client";
 import { CreateCondidate, GetCondidates } from "@/_services/GetCondidats";
-import { Condidate, Errors, Field, Session } from "@/_services/Interfaces";
+import { Condidate, Errors, Field, Session } from "@/interfaces/Interfaces";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";

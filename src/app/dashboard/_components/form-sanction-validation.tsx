@@ -1,7 +1,8 @@
 // import React from "react";
 "use client";
-import { Employer, Sanction } from "@/_services/Interfaces";
+// import { Employer, Sanction } from "@/_services/Interfaces";
 import { addSanction } from "@/actions/addSanction";
+import { Employer, Sanction } from "@/interfaces/Interfaces";
 import { sanctionSchema } from "@/lib/zodTypes";
 import { revalidatePath } from "next/cache";
 import toast from "react-hot-toast";
@@ -29,7 +30,7 @@ function FormsSanctionValidation({ ouvrier }: Props) {
 
       toast.dismiss(toastId);
       toast.success("Sanction added successfully");
-      revalidatePath(`/dashboard/${ouvrier._id}/view`);
+      // revalidatePath(`/dashboard/${ouvrier._id}/view`);
     } else {
       let errorMsg = "";
       result.error.issues.forEach((issue) => {
@@ -45,10 +46,10 @@ function FormsSanctionValidation({ ouvrier }: Props) {
         <div className="mx-auto max-w-lg text-center">
           <h1 className="text-2xl font-bold sm:text-3xl">Ajouter sanction</h1>
 
-          <p className="mt-4 text-gray-500">
+          {/* <p className="mt-4 text-gray-500">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero
             nulla eaque error neque ipsa culpa autem, at itaque nostrum!
-          </p>
+          </p> */}
         </div>
 
         <form

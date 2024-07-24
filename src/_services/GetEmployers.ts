@@ -1,4 +1,4 @@
-import { Employer } from "./Interfaces";
+import { Employer } from "../interfaces/Interfaces";
 export const baseUrl = "http://localhost:3000";
 // Fetch all employers
 export async function GetEmployers() {

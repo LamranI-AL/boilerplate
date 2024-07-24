@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import connectDb from "./_db/db";
-import { User } from "./_services/Interfaces";
+import { User } from "./interfaces/Interfaces";
 import { getUserFromDb } from "./_services/GetCurrentUser";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {

@@ -1,5 +1,5 @@
 import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
-import { Counter, Employer } from "@/_services/Interfaces";
+import { Counter, Employer } from "@/interfaces/Interfaces";
 import React from "react";
 interface Props {
   isActive: boolean;

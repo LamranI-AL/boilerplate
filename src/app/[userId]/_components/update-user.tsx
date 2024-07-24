@@ -1,13 +1,30 @@
-import { UpdateUser } from "@/_services/GetCurrentUser";
-import { User } from "@/_services/Interfaces";
+"use client";
+import { updateUserAction } from "@/actions/updateUserAction";
+import { Button } from "@/components/ui/button";
+import { User } from "@/interfaces/Interfaces";
+import { userSchema } from "@/lib/zodTypes";
 import React from "react";
+import toast from "react-hot-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { DeleteUser } from "@/_services/GetCurrentUser";
+import { useRouter } from "next/navigation";
 interface Props {
   currentUser: User;
   user: User;
 }
-async function UpdateUserForm({ user, currentUser }: Props) {
-  const getDataForm = async (formData: FormData) => {
-    "use server";
+function UpdateUserForm({ user, currentUser }: Props) {
+  const router = useRouter();
+  const updateUserClientSide = async (formData: FormData) => {
     const nom = formData.get("first_name") as string;
     const prenom = formData.get("last_name") as string;
     const email = formData.get("email") as string;
@@ -18,23 +35,44 @@ async function UpdateUserForm({ user, currentUser }: Props) {
       prenom.slice(1) +
       " " +
       nom.toUpperCase();
-    // console.log(nom, prenom, email, ancienPassword, newPassword);
-    if (ancienPassword !== user.password) {
-      console.log("ancien mot de passe incorrect pas autorite de modifiée");
-      //   throw new Error("ancien mot de passe incorrect ");
+    const inputUser = {
+      nom: nom,
+      prenom: prenom,
+      email: email,
+      lastPassword: ancienPassword,
+      newPassword: newPassword,
+    };
+    const newUpdatedUser: User = {
+      ...user,
+      name: fullName,
+      email: email,
+      password: newPassword,
+    };
+    const result = userSchema.safeParse(inputUser);
+    if (result.success) {
+      if (ancienPassword === user.password) {
+        const toastId = toast.loading("Waiting...");
+        await updateUserAction(newUpdatedUser);
+        toast.dismiss(toastId);
+        toast.success("Sanction added successfully");
+        // window.location.reload();
+      } else {
+        toast.error("ancien mot de passe incorrect ");
+      }
     } else {
-      const newUpdatedUser: User = {
-        ...user,
-        name: fullName,
-        email: email,
-        password: newPassword,
-      };
-      await UpdateUser(user._id, newUpdatedUser);
-      console.log("user updated");
+      let errorMsg = "";
+      result.error?.issues.forEach((issue) => {
+        errorMsg += issue.path[0] + " : " + issue.message + " . \n";
+      });
+      console.log(result.error?.issues, errorMsg);
+      toast.error(errorMsg);
     }
-    //
-    // revalidatePath("/"); revalidate
-    // console.log(newUpdatedUser);
+  };
+  const deleteUserAdmin = async (formData: FormData) => {
+    console.log(formData);
+    console.log("is ok");
+    await DeleteUser(user._id);
+    router.push("/");
   };
   return (
     <div>
@@ -71,7 +109,7 @@ async function UpdateUserForm({ user, currentUser }: Props) {
               </div>
 
               <form
-                action={getDataForm}
+                action={updateUserClientSide}
                 className="mt-8 grid grid-cols-6 gap-6"
               >
                 <div className="col-span-6 sm:col-span-3">
@@ -83,6 +121,7 @@ async function UpdateUserForm({ user, currentUser }: Props) {
                   </label>
 
                   <input
+                    placeholder="Veuillez saisir le nom"
                     type="text"
                     id="FirstName"
                     name="first_name"
@@ -99,6 +138,7 @@ async function UpdateUserForm({ user, currentUser }: Props) {
                   </label>
 
                   <input
+                    placeholder="Veuillez saisir prenom"
                     type="text"
                     id="LastName"
                     name="last_name"
@@ -116,6 +156,7 @@ async function UpdateUserForm({ user, currentUser }: Props) {
                   </label>
 
                   <input
+                    placeholder="Veuillez saisir l'email"
                     type="email"
                     id="Email"
                     name="email"
@@ -133,6 +174,7 @@ async function UpdateUserForm({ user, currentUser }: Props) {
                   </label>
 
                   <input
+                    placeholder="le mot de passe ancienne ***"
                     type="password"
                     id="password_ancienn"
                     name="password_ancienn"
@@ -150,6 +192,7 @@ async function UpdateUserForm({ user, currentUser }: Props) {
                   </label>
 
                   <input
+                    placeholder="le nouveau mot de passe *** "
                     type="password"
                     id="password_new"
                     name="password_new"
@@ -167,7 +210,7 @@ async function UpdateUserForm({ user, currentUser }: Props) {
                     />
 
                     <span className="text-sm text-gray-700">
-                      I accept the terms of service and privacy policy
+                      J'assume la responsabilité de modifié
                     </span>
                   </label>
                 </div>
@@ -178,6 +221,42 @@ async function UpdateUserForm({ user, currentUser }: Props) {
                   </button>
                 </div>
               </form>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className="text-red-500 w-full mt-3 hover:bg-red-100 hover:text-red-600"
+                  >
+                    supprimer administrateur {user.name}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Êtes-vous sûr de vouloir supprimer?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Faire cela pourrait causer des problèmes ailleurs, es-tu
+                      sûr à 100 % que c'est OK ?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <form
+                      className=" flex w-full justify-end"
+                      action={deleteUserAdmin}
+                    >
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        type="submit"
+                        className="bg-red-50 mx-2 text-red-500 hover:bg-red-100 hover:text-red-600"
+                      >
+                        supprimer
+                      </AlertDialogAction>
+                    </form>
+                  </AlertDialogFooter>
+                </AlertDialogContent>{" "}
+              </AlertDialog>
             </div>
           </main>
         </div>

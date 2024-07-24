@@ -1,5 +1,5 @@
 import { baseUrl } from "./GetEmployers";
-import { Poste } from "./Interfaces";
+import { Employer, Poste } from "../interfaces/Interfaces";
 // import { Sanction } from "./Interfaces";
 
 // Fetch all employers
@@ -42,10 +42,20 @@ export async function UpdatePost(id: string, newPoste: Poste) {
 }
 
 // Delete an employer
-export async function DeletenPost(id: string) {
+export async function DeletePoste(id: string) {
   const response = await fetch(`${baseUrl}/api/posts/${id}`, {
     method: "DELETE",
   });
   const data = await response.json();
   return data;
+}
+export async function GetEmployersByPost(Poste: string) {
+  const response = await fetch(`${baseUrl}/api/employees`);
+  const employers: Employer[] = await response.json();
+  // console.log(employers);
+  const normalizedPoste = Poste.toLowerCase();
+  const EmployeesFiltred = employers.filter((e) => {
+    return e.posteName.toLowerCase().includes(normalizedPoste);
+  });
+  return EmployeesFiltred;
 }

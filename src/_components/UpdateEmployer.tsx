@@ -1,6 +1,6 @@
 "use client";
 import { GetEmployerById, UpdateEmployer } from "@/_services/GetEmployers";
-import { Employer, Errors, Field, Session } from "@/_services/Interfaces";
+import { Employer, Errors, Field, Session } from "@/interfaces/Interfaces";
 import React, { useEffect, useRef, useState } from "react";
 import AlertSucces from "./alertSucces";
 interface Props {

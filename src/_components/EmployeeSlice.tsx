@@ -1,5 +1,6 @@
-// "use client";
-import { Employer } from "@/_services/Interfaces";
+"use client";
+import { formatDate } from "@/app/_utils/formatDate";
+import { Employer } from "@/interfaces/Interfaces";
 import Link from "next/link";
 import React from "react";
 
@@ -12,6 +13,7 @@ const EmployesList: React.FC<EmployeeSliceProps> = async ({
   employer,
   isActive,
 }: EmployeeSliceProps) => {
+  const date = new Date(employer.dateNaissance).toLocaleDateString().toString();
   return (
     <tr>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
@@ -24,12 +26,15 @@ const EmployesList: React.FC<EmployeeSliceProps> = async ({
         {employer.CIN}
       </td>
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {new Date(employer.dateNaissance).toLocaleDateString()}
+        {formatDate(employer.dateNaissance)}
+      </td>
+      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+        {employer.posteName}
       </td>
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
         {employer.phoneNumber}
       </td>
-      <td className="whitespace-nowrap gap-3 px-4 py-2 ">
+      <td className="whitespace-nowrap flex gap-3 px-4 py-2 ">
         <Link
           className="group relative inline-flex items-center overflow-hidden rounded bg-zinc-700 px-6 py-2 text-white focus:outline-none focus:ring active:bg-zinc-500"
           href={`/dashboard/${employer._id}/view`}
@@ -84,12 +89,11 @@ const EmployesList: React.FC<EmployeeSliceProps> = async ({
             </span>
           </Link>
         ) : (
-          <p>
-            <strong>
-              {employer.UserDelete.length === 0 ? "admin" : employer.UserDelete}
-            </strong>{" "}
-            qui me supprimer
-          </p>
+          <div className="mt-4 flex flex-wrap gap-1">
+            <span className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600">
+              admin : {employer.UserDelete}
+            </span>
+          </div>
         )}
       </td>
     </tr>

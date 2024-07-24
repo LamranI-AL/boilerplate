@@ -1,8 +1,9 @@
 import { GetAllUsers } from "@/_services/GetCurrentUser";
-import { User } from "@/_services/Interfaces";
+import { User } from "@/interfaces/Interfaces";
 import React from "react";
 import UserControle from "./UserControle";
 import UserSlice from "./user-slice";
+import UserAddForm from "./user-add-form";
 interface Props {
   users: User[];
 }
@@ -20,13 +21,19 @@ async function UserList({ users }: Props) {
           ici tous les utilisateur de application affiche si dessous
         </p>
       </header>
-      <ul className="mt-8 grid gap-4 m-5 sm:grid-cols-2 lg:grid-cols-3">
-        {users
-          ? users.map((user) => (
-              <UserSlice /*imgUrl={img}*/ user={user} key={user._id} />
-            ))
-          : "no data"}
-      </ul>
+
+      {users ? (
+        <div>
+          <ul className="mt-8 grid gap-4 m-5 sm:grid-cols-2 lg:grid-cols-3">
+            {users.map((user) => (
+              <UserSlice user={user} key={user._id} />
+            ))}
+            <UserAddForm />
+          </ul>
+        </div>
+      ) : (
+        <UserAddForm />
+      )}
     </div>
   );
 }

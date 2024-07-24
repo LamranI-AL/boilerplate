@@ -1,5 +1,6 @@
 // import AddPhotoProfile from "@/_components/AddPhotoProfile";
-import { Employer, Field } from "@/_services/Interfaces";
+// import { Employer, Field } from "@/_services/Interfaces";
+import { Employer } from "@/interfaces/Interfaces";
 import React from "react";
 interface EmployerCardProps {
   employee: Employer;
@@ -55,6 +56,16 @@ async function EmployerCard({ employee }: EmployerCardProps) {
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">cree par : </dt>
           <dd className="text-gray-700 sm:col-span-2">{employee.creatUser}</dd>
+        </div>
+        <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+          <dt className="font-medium text-gray-900">Commentaire du rejet </dt>
+          <dd className="text-gray-700 sm:col-span-2">
+            {employee.rejectMotif ? (
+              employee.rejectMotif
+            ) : (
+              <p>en attend le commentaire ...</p>
+            )}
+          </dd>
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">

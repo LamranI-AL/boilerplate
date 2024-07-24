@@ -4,8 +4,8 @@ const PosteShema = new mongoose.Schema({
   name: { type: String, required: true },
   EmployerId: { type: String, required: true },
   EmployerCIN: { type: String },
-  dateDebute: Date,
-  dateFin: Date,
+  dateDebute: { type: Date },
+  dateFin: { type: Date },
   motifDebut: { type: String, required: true },
 });
 

@@ -1,5 +1,5 @@
 import { GetSanctionByIdEmploye } from "@/_services/GetSanctions";
-import { Employer, Sanction } from "@/_services/Interfaces";
+import { Employer, Sanction } from "@/interfaces/Interfaces";
 import React from "react";
 import SanctionCard from "./sanction-card";
 interface Props {
@@ -16,7 +16,9 @@ async function SanctionList({ ouvrier }: Props) {
           })}
         </ul>
       ) : (
-        "no data"
+        <div className="text-green-500 text-center font-bold ">
+          pas de sanctions a ce monsieur
+        </div>
       )}
     </div>
   );

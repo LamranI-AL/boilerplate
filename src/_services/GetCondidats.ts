@@ -1,5 +1,5 @@
 import { baseUrl } from "./GetEmployers";
-import { Condidate } from "./Interfaces";
+import { Condidate } from "../interfaces/Interfaces";
 
 // Fetch all employers
 export async function GetCondidates() {

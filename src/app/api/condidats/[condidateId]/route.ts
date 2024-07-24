@@ -1,5 +1,6 @@
 import connectDb from "@/_db/db";
-import { Condidate } from "@/_services/Interfaces";
+import { Condidate } from "@/interfaces/Interfaces";
+// import { Condidate } from "@/_services/Interfaces";
 import Condidats from "@/models/Condidats";
 import { NextRequest, NextResponse } from "next/server";
 interface Props {

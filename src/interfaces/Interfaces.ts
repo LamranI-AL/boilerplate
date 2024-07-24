@@ -9,6 +9,7 @@ export interface Employer {
   posteName: string;
   creatUser: string;
   isRejected: boolean;
+  rejectMotif: string;
   UserUpdate: string;
   UserDelete: string;
   deleteDate: Date;
@@ -37,11 +38,11 @@ export interface Condidate {
   deleteDate: Date;
 }
 export interface Poste {
-  _id: number;
+  _id: string;
   name: string;
   EmployerId: string;
   EmployerCIN: string;
-  dateDebut: Date;
+  dateDebute: Date;
   dateFin: Date;
   motifDebut: string;
 }

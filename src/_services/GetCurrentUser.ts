@@ -1,5 +1,5 @@
 import { baseUrl } from "./GetEmployers";
-import { User } from "./Interfaces";
+import { User } from "../interfaces/Interfaces";
 
 export async function GetAllUsers() {
   const response = await fetch(`${baseUrl}/api/users`, {

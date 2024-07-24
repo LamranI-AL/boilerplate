@@ -1,23 +1,12 @@
-import { User } from "@/_services/Interfaces";
+import { User } from "@/interfaces/Interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 interface Props {
   user: User;
-  // imgUrl: string;
 }
-function UserSlice({ user /*imgUrl*/ }: Props) {
+function UserSlice({ user }: Props) {
   const lastSeen = new Date(user.lastLoginDate);
-  // let imgUrl = "";
-  // if (user.name.includes("abdulah")) {
-  //   imgUrl = "/momare.jpg";
-  // } else if (user.name.includes("othmane")) {
-  //   imgUrl = "/othmane.jpg";
-  // } else if (user.name.includes("abderahmane")) {
-  //   imgUrl = "/ayoube.jpg";
-  // }
-
-  // }
   return (
     <Link
       href={`/${user._id}/edit`}
