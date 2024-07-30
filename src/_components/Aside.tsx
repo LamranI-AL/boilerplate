@@ -3,6 +3,13 @@
 // import { Counter } from "@/_services/Interfaces";
 import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
 import { Counter } from "@/interfaces/Interfaces";
+import {
+  Archive,
+  SeparatorHorizontalIcon,
+  UserCheck,
+  UserPlus,
+  UserRoundX,
+} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 interface Props {
@@ -43,21 +50,7 @@ async function Aside({ type }: Props) {
                       href="/ajouter-ouvrier"
                       className="group relative flex justify-center rounded px-2 py-1.5 text-cyan-900 hover:bg-gray-50 hover:text-gray-700"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 "
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-
+                      <UserPlus />
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         ajouter {type}
                       </span>
@@ -67,21 +60,7 @@ async function Aside({ type }: Props) {
                       href="/ajouter-condidate"
                       className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-cyan-700"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-
+                      <UserPlus />
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         ajouter {type}
                       </span>
@@ -95,20 +74,7 @@ async function Aside({ type }: Props) {
                       href="/dashboard/list"
                       className="group relative flex justify-center rounded px-2 py-1.5 text-green-900 hover:bg-gray-50 hover:text-gray-700"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 14c-3.31 0-6 2.69-6 6v2h12v-2c0-3.31-2.69-6-6-6zm0-2c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3z"
-                        />
-                      </svg>
+                      <UserCheck />
 
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         ouvrier Actives
@@ -146,26 +112,14 @@ async function Aside({ type }: Props) {
                   )}
                 </li>
                 <li>
+                  <SeparatorHorizontalIcon className="text-gray-400 items-center content-center mx-3 my-5" />
                   {/* archive / non retenus */}
                   {type === "ouvrier" ? (
                     <Link
                       href="/dashboard/ouvriers-archive"
                       className="group relative flex justify-center  rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="h-5 w-5 mx-2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
-                        />
-                      </svg>
+                      <Archive className="text-cyan-800" />
 
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         ouvrier Archiver
@@ -198,6 +152,32 @@ async function Aside({ type }: Props) {
 
                       <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         condidate non retenus
+                      </span>
+                    </Link>
+                  )}
+                </li>
+                <li>
+                  {/* black list / archive */}
+                  {type === "ouvrier" ? (
+                    <Link
+                      href="/dashboard/black-list"
+                      className="group relative flex justify-center  rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                    >
+                      <UserRoundX className="text-sm text-red-800" />
+
+                      <span className="invisible absolute start-full text-red-500 top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium  group-hover:visible">
+                        List Noie
+                      </span>
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/condidats/archived-list-reembauchees"
+                      className="group relative flex justify-center  rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                    >
+                      <Archive className="text-sm text-gray-600" />
+
+                      <span className="invisible absolute start-full text-white top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium  group-hover:visible">
+                        archive
                       </span>
                     </Link>
                   )}

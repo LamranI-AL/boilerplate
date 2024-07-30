@@ -1,4 +1,4 @@
-import { Condidate } from "@/_services/Interfaces";
+import { Condidate } from "@/interfaces/Interfaces";
 import React from "react";
 interface CondidateCardProps {
   condidate: Condidate;
@@ -56,6 +56,16 @@ function CondidateCard({ condidate }: CondidateCardProps) {
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">cree par : </dt>
           <dd className="text-gray-700 sm:col-span-2">{condidate.creatUser}</dd>
+        </div>
+        <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+          <dt className="font-medium text-gray-900">
+            dernier mise à jour par :{" "}
+          </dt>
+          <dd className="text-gray-700 sm:col-span-2">
+            {condidate.UserApdate
+              ? condidate.UserApdate
+              : "pas encore mise à jour"}
+          </dd>
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">

@@ -1,7 +1,7 @@
 "use client";
 import { GetEmployers } from "@/_services/GetEmployers";
-import { Employer } from "@/_services/Interfaces";
-import { useSearchStore } from "@/_services/Store";
+import { Employer } from "@/interfaces/Interfaces";
+import { useSearchStore } from "@/_store/Store";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";

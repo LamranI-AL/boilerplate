@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import AlertSucces from "./alertSucces";
-// import ButtonLoader from "./ButtonLoader";
-// // import { useSession } from "next-auth/react";
 interface Props {
   session: Session;
 }
@@ -129,7 +127,7 @@ const AddCondidate = ({ session }: Props) => {
   };
 
   const creatUser = async () => {
-    const newCondidate: Condidate = {
+    const newCondidate: Condidate | any = {
       CIN: cinRef.current?.value ?? "",
       firstName: FerstNameRef.current?.value ?? "",
       lastName: lastNameRef.current?.value ?? "",
@@ -146,6 +144,7 @@ const AddCondidate = ({ session }: Props) => {
       deleteDate: new Date(""),
       UserApdate: "",
       UserDelete: "",
+      isArchived: false,
     };
     console.log(newCondidate);
     await CreateCondidate(newCondidate);
@@ -259,15 +258,8 @@ const AddCondidate = ({ session }: Props) => {
             </div>
           </div>
 
-          {/* <button
-            type="submit"
-            className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
-          >
-            Ajouter
-          </button> */}
           <button
             type="submit"
-            // onClick={handleLogin}
             disabled={isloading}
             className={`flex w-full items-center justify-center p-2 bg-green-600 text-white rounded ${
               isloading ? "cursor-not-allowed" : "hover:bg-green-700"
@@ -298,7 +290,6 @@ const AddCondidate = ({ session }: Props) => {
               "ajouter"
             )}
           </button>
-          {/* <ButtonLoader isloading={isloading} title="ajouter" /> */}
           {showSuccessAlert && (
             <div>
               <div className="mb-4 rounded-lg bg-green-500 p-4 text-white text-center">

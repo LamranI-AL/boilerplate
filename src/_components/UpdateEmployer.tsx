@@ -123,7 +123,7 @@ const UpdateEmployerSlice = ({ employerId, session }: Props) => {
       email: emailRef.current?.value ?? employer.email,
       posteName: posteRef.current?.value ?? employer.posteName,
       raison: motifPosteRef.current?.value ?? "",
-      updateAt: new Date(Date.now()), // i will CHECK THIS IF IS CORRECT IN API POSTMAN inchalah
+      updateAt: new Date(Date.now()),
       UserUpdate: session.user.name ?? "",
     };
     console.log(updatedEmployer);

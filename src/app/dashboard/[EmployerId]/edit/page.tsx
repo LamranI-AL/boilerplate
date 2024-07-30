@@ -1,6 +1,7 @@
 // "use client";
 import UpdateEmployerSlice from "@/_components/UpdateEmployer";
 import { auth } from "@/auth";
+import { Session } from "@/interfaces/Interfaces";
 import React from "react";
 interface Props {
   params: {
@@ -9,7 +10,7 @@ interface Props {
 }
 
 async function page({ params }: Props) {
-  const session = await auth();
+  const session: Session | any = await auth();
   return (
     <UpdateEmployerSlice employerId={params.EmployerId} session={session} />
   );

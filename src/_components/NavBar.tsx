@@ -2,10 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Search from "./Search";
 import { usePathname } from "next/navigation";
+import NavCardDropdown from "./nav-card-dropdown";
+import { DrawerDemo } from "./nav-message-dropdawn";
+interface Props {}
 
-function NavBar() {
+function NavBar({}: Props) {
   const pathname = usePathname();
   const items = [
     { key: "1", name: "Acceuil", link: "/" },
@@ -38,6 +40,8 @@ function NavBar() {
             ))}
           </ul>
         </nav>
+        {/* <DrawerDemo /> */}
+        <NavCardDropdown />
       </div>
     </header>
   );

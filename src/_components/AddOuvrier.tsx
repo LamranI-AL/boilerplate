@@ -1,5 +1,6 @@
 "use client";
 import { CreateEmployer, GetEmployers } from "@/_services/GetEmployers";
+import { CreatePost } from "@/_services/GetPosts";
 import {
   Employer,
   Errors,
@@ -106,14 +107,13 @@ const AddOuvrier = ({ session }: Props) => {
   };
 
   const creatUser = async () => {
-    const newOuvrier: Employer = {
+    const newOuvrier: Employer | any = {
       CIN: cinRef.current?.value ?? "",
       FerstName: FerstNameRef.current?.value ?? "",
       lastName: lastNameRef.current?.value ?? "",
-      // role: "user",
       phoneNumber: phoneNumberRef.current?.value ?? "",
       dateNaissance: new Date(dateNaissanceRef.current?.value ?? ""),
-      email: "", // à remplir selon vos besoins
+      email: "",
       posteName: posteRef.current?.value ?? "",
       isRejected: false,
       isArchive: false,
@@ -124,10 +124,16 @@ const AddOuvrier = ({ session }: Props) => {
       deleteDate: new Date(""),
       UserDelete: "",
       UserUpdate: "",
+      isInBlackList: false,
     };
+    await CreateEmployer(newOuvrier)
+      .then(() => {
+        console.log("creat employee is ok ");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log(newOuvrier);
-    await CreateEmployer(newOuvrier);
-    
   };
   const resetForm = () => {
     if (FerstNameRef.current) FerstNameRef.current.value = "";

@@ -1,5 +1,6 @@
 import UpdateCondidateSlice from "@/_components/UpdateCondidate";
 import { auth } from "@/auth";
+import { Session } from "@/interfaces/Interfaces";
 import React from "react";
 interface Props {
   params: {
@@ -7,11 +8,8 @@ interface Props {
   };
 }
 async function page({ params }: Props) {
-  const session = await auth();
-  console.log(params.CondidatId);
-  console.log(typeof params.CondidatId);
+  const session: Session | any = await auth();
   return (
-    // <div className="container">edit page</div>
     <UpdateCondidateSlice CondidatId={params.CondidatId} session={session} />
   );
 }

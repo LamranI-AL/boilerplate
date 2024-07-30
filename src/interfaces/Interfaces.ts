@@ -17,6 +17,7 @@ export interface Employer {
   raison: string;
   createdAt: Date;
   updateAt: Date;
+  isInBlackList: boolean;
 }
 export interface Condidate {
   _id: string;
@@ -36,6 +37,7 @@ export interface Condidate {
   updateDate: Date;
   UserDelete: string;
   deleteDate: Date;
+  isArchived: boolean;
 }
 export interface Poste {
   _id: string;

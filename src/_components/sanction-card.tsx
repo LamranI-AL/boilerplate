@@ -1,4 +1,4 @@
-import { Employer, Sanction } from "@/_services/Interfaces";
+import { Employer, Sanction } from "@/interfaces/Interfaces";
 import React from "react";
 interface Props {
   sanction: Sanction;

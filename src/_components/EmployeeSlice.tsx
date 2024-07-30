@@ -13,7 +13,6 @@ const EmployesList: React.FC<EmployeeSliceProps> = async ({
   employer,
   isActive,
 }: EmployeeSliceProps) => {
-  const date = new Date(employer.dateNaissance).toLocaleDateString().toString();
   return (
     <tr>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">

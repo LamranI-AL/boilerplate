@@ -19,6 +19,7 @@ const EmployerSchema = new mongoose.Schema({
   UserApdate: { type: String },
   UserDelete: { type: String },
   deleteDate: { type: Date },
+  isInBlackList: { type: Boolean, default: false },
 });
 export default mongoose.models.EmployerModel ||
   mongoose.model("EmployerModel", EmployerSchema);

@@ -1,3 +1,4 @@
+import { formatDate } from "@/app/_utils/formatDate";
 import { Condidate } from "@/interfaces/Interfaces";
 import Link from "next/link";
 import React from "react";
@@ -19,7 +20,7 @@ function CondidateSlice({ condidate, isSucess }: EmployeeSliceProps) {
         {condidate.CIN}
       </td>
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {new Date(condidate.dateNaissance).toLocaleDateString()}
+        {formatDate(condidate.dateNaissance)}
       </td>
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
         {condidate.posteApplique}

@@ -1,6 +1,6 @@
 "use client";
 import { GetCondidateById, UpdateCondidate } from "@/_services/GetCondidats";
-import { Condidate, Errors, Field, Session } from "@/_services/Interfaces";
+import { Condidate, Errors, Field, Session } from "@/interfaces/Interfaces";
 
 import React, { useEffect, useRef, useState } from "react";
 import AlertSucces from "./alertSucces";

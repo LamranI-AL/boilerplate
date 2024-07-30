@@ -17,6 +17,8 @@ const CondidateModel = new mongoose.Schema({
   updateDate: { type: Date },
   UserDelete: { type: String },
   deleteDate: { type: Date },
+  isArchived: { type: Boolean },
+  reembocheDate: { type: Date },
 });
 
 export default mongoose.models.condidates ||

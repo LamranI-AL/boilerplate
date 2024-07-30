@@ -12,7 +12,6 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
     set((state) => ({ currentSearch: value })),
 }));
 
-// import { create } from "zustand";
 // import { Employer } from "./Interfaces";
 // import { GetEmployers } from "./GetEmployers";
 

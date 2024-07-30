@@ -1,4 +1,5 @@
 "use client";
+import { UpdateEmployer } from "@/_services/GetEmployers";
 import { addPosteAction } from "@/actions/addPoste";
 import { Employer, Poste } from "@/interfaces/Interfaces";
 import { posteSchema } from "@/lib/zodTypes";
@@ -21,7 +22,7 @@ function FormsPosteValidation({ ouvrier }: Props) {
       date: new Date(date as string),
       motif: motif as string,
     };
-    const newPoste: Poste = {
+    const newPoste: Poste | any = {
       dateFin: new Date(""),
       EmployerCIN: ouvrier.CIN,
       EmployerId: ouvrier._id,
@@ -29,11 +30,23 @@ function FormsPosteValidation({ ouvrier }: Props) {
       dateDebute: new Date(date),
       motifDebut: motif as string,
     };
+    const UpdatedEmployee: Employer = {
+      // je veut update  employee car je propos que si vous ajoutee un post alors ouvrier upgrade le poste actuelle
+      // et si vous retirez un poste alors ouvrier downgrade le poste actuelle
+      ...ouvrier,
+      posteName: nouveauPoste,
+      raison: motif,
+    };
+
     //validation
     const result = posteSchema.safeParse(inputUser);
     if (result.success) {
       const toastId = toast.loading("Waiting...");
       await addPosteAction(newPoste);
+      //ca depont aussi b reponsable est ce qu'il voulez update le post depond de l'ouvrier ou non
+      await UpdateEmployer(ouvrier._id, UpdatedEmployee).then(() =>
+        console.log("update sucess")
+      );
 
       toast.dismiss(toastId);
       toast.success("poste added successfully");

@@ -58,6 +58,16 @@ async function EmployerCard({ employee }: EmployerCardProps) {
           <dd className="text-gray-700 sm:col-span-2">{employee.creatUser}</dd>
         </div>
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+          <dt className="font-medium text-gray-900">
+            dernier mise à jour par :{" "}
+          </dt>
+          <dd className="text-gray-700 sm:col-span-2">
+            {employee.UserUpdate
+              ? employee.UserUpdate
+              : "pas encore mise à jour"}
+          </dd>
+        </div>
+        <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
           <dt className="font-medium text-gray-900">Commentaire du rejet </dt>
           <dd className="text-gray-700 sm:col-span-2">
             {employee.rejectMotif ? (
