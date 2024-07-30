@@ -3,7 +3,7 @@ import { Condidate } from "../interfaces/Interfaces";
 
 // Fetch all employers
 export async function GetCondidates() {
-  const response = await fetch(`${baseUrl}/api/condidats`, {
+  const response = await fetch(`${baseUrl}/condidates`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -13,7 +13,7 @@ export async function GetCondidates() {
 
 // Fetch an employer by ID
 export async function GetCondidateById(id: string) {
-  const response = await fetch(`${baseUrl}/api/condidats/${id}`, {
+  const response = await fetch(`${baseUrl}/condidates/${id}`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -23,7 +23,7 @@ export async function GetCondidateById(id: string) {
 
 // Create a  newCondidate
 export async function CreateCondidate(newCondidate: Condidate) {
-  const response = await fetch(`${baseUrl}/api/condidats`, {
+  const response = await fetch(`${baseUrl}/condidates`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newCondidate),
@@ -34,7 +34,7 @@ export async function CreateCondidate(newCondidate: Condidate) {
 
 // Update an existing employer
 export async function UpdateCondidate(id: string, newCondidate: Condidate) {
-  const response = await fetch(`${baseUrl}/api/condidats/${id}`, {
+  const response = await fetch(`${baseUrl}/condidates/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newCondidate),
@@ -45,7 +45,7 @@ export async function UpdateCondidate(id: string, newCondidate: Condidate) {
 
 // Delete an employer
 export async function DeleteCondidate(id: string) {
-  const response = await fetch(`${baseUrl}/api/condidats/${id}`, {
+  const response = await fetch(`${baseUrl}/condidates/${id}`, {
     method: "DELETE",
   });
   const data = await response.json();

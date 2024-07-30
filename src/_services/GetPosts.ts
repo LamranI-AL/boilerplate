@@ -4,7 +4,7 @@ import { Employer, Poste } from "../interfaces/Interfaces";
 
 // Fetch all employers
 export async function GetPosts() {
-  const response = await fetch(`${baseUrl}/api/posts`, {
+  const response = await fetch(`${baseUrl}/posts`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -12,7 +12,7 @@ export async function GetPosts() {
   return data;
 }
 export async function GetPostByIdEmploye(id: string) {
-  const response = await fetch(`${baseUrl}/api/posts/${id}`, {
+  const response = await fetch(`${baseUrl}/posts/${id}`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -21,7 +21,7 @@ export async function GetPostByIdEmploye(id: string) {
 }
 // Create a  newCondidate
 export async function CreatePost(newPoste: Poste) {
-  const response = await fetch(`${baseUrl}/api/posts`, {
+  const response = await fetch(`${baseUrl}/posts`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newPoste),
@@ -32,7 +32,7 @@ export async function CreatePost(newPoste: Poste) {
 
 // Update an existing employer
 export async function UpdatePost(id: string, newPoste: Poste) {
-  const response = await fetch(`${baseUrl}/api/posts/${id}`, {
+  const response = await fetch(`${baseUrl}/posts/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newPoste),
@@ -43,14 +43,14 @@ export async function UpdatePost(id: string, newPoste: Poste) {
 
 // Delete an employer
 export async function DeletePoste(id: string) {
-  const response = await fetch(`${baseUrl}/api/posts/${id}`, {
+  const response = await fetch(`${baseUrl}/posts/${id}`, {
     method: "DELETE",
   });
   const data = await response.json();
   return data;
 }
 export async function GetEmployersByPost(Poste: string) {
-  const response = await fetch(`${baseUrl}/api/employees`);
+  const response = await fetch(`${baseUrl}/employees`);
   const employers: Employer[] = await response.json();
   // console.log(employers);
   const normalizedPoste = Poste.toLowerCase();

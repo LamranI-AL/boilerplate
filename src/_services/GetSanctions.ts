@@ -3,7 +3,7 @@ import { Sanction } from "../interfaces/Interfaces";
 
 // Fetch all employers
 export async function GetSanctions() {
-  const response = await fetch(`${baseUrl}/api/sanctions`, {
+  const response = await fetch(`${baseUrl}/sanctions`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -11,7 +11,7 @@ export async function GetSanctions() {
   return data;
 }
 export async function GetSanctionByIdEmploye(id: string) {
-  const response = await fetch(`${baseUrl}/api/sanctions/${id}`, {
+  const response = await fetch(`${baseUrl}/sanctions/${id}`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -20,7 +20,7 @@ export async function GetSanctionByIdEmploye(id: string) {
 }
 // Create a  newCondidate
 export async function CreateSanction(newSanction: Sanction) {
-  const response = await fetch(`${baseUrl}/api/sanctions`, {
+  const response = await fetch(`${baseUrl}/sanctions`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newSanction),
@@ -31,7 +31,7 @@ export async function CreateSanction(newSanction: Sanction) {
 
 // Update an existing employer
 export async function UpdateSanction(id: string, newSanction: Sanction) {
-  const response = await fetch(`${baseUrl}/api/sanctions/${id}`, {
+  const response = await fetch(`${baseUrl}/sanctions/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newSanction),
@@ -42,7 +42,7 @@ export async function UpdateSanction(id: string, newSanction: Sanction) {
 
 // Delete an employer
 export async function DeleteSanction(id: string) {
-  const response = await fetch(`${baseUrl}/api/sanctions/${id}`, {
+  const response = await fetch(`${baseUrl}/sanctions/${id}`, {
     method: "DELETE",
   });
   const data = await response.json();
