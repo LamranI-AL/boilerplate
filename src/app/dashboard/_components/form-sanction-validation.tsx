@@ -26,7 +26,7 @@ function FormsSanctionValidation({ ouvrier }: Props) {
     const result = sanctionSchema.safeParse(newSanction);
     if (result.success) {
       const toastId = toast.loading("Waiting...");
-      await addSanction(result.data);
+      await addSanction(result.data as Sanction);
 
       toast.dismiss(toastId);
       toast.success("Sanction added successfully");
