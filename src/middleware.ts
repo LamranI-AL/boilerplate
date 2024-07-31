@@ -4,8 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const isAuth = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
+    req: request, // requête nxtjs
+    secret: process.env.NEXTAUTH_SECRET ?? "",
+    salt: process.env.NEXTAUTH_SALT ?? "some-default-salt",
   });
   const protectedPages = [
     "/dashboard/:path",
