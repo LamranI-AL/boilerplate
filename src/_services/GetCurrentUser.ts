@@ -10,7 +10,7 @@ export async function GetAllUsers() {
   return data;
 }
 export async function GetUserByID(id: string) {
-  const response = await fetch(`${baseUrl}/api/users/${id}`, {
+  const response = await fetch(`${baseUrl}/users/${id}`, {
     method: "GET",
     cache: "no-cache",
   });
@@ -48,10 +48,8 @@ export async function DeleteUser(id: string) {
 export async function getUserFromDb(email: string) {
   const response = await fetch(`${baseUrl}/users`);
   const users: User[] = await response.json();
-  console.log(users);
   const user = users.filter((u) => {
     return u.email === email;
   });
-  console.log(user[0]);
   return user[0];
 }

@@ -1,22 +1,37 @@
+"use client";
 import { Poste } from "@/interfaces/Interfaces";
 import React from "react";
 interface Props {
   post: Poste;
 }
-async function PostSlice({ post }: Props) {
-  const date = new Date(post.dateDebute);
-  const dateFin = new Date(post.dateFin === null ? "" : post.dateFin);
+function PostSlice({ post }: Props) {
+  // const date = new Date(post.dateDebute);
+  // const dateFin = new Date(post.dateFin === null ? "" : post.dateFin);
+  const getDateDebut = () => {
+    const now = new Date(post.dateDebute);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+  };
+  const getDateFin = () => {
+    const now = new Date(post.dateFin === null ? "" : post.dateFin);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+  };
   return (
     <div>
       <article className="hover:animate-background rounded-xl bg-gradient-to-r cursor-pointer from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">
         <div className="rounded-[10px] bg-white p-4 !pt-20 sm:p-6">
           <div className="block text-xs font-medium text-gray-800">
             {"date d'occupation : "}
-            {date.toLocaleDateString().toString()}
+            {getDateDebut()}
           </div>
           <div className="block text-xs text-gray-800">
             {"date de quite: "}
-            {dateFin.toLocaleDateString().toString()}
+            {getDateFin()}
           </div>
 
           <div>

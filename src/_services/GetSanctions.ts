@@ -18,6 +18,11 @@ export async function GetSanctionByIdEmploye(id: string) {
   const data = await response.json();
   return data;
 }
+// export async function GetSanctionByIdEmploye(id: string) {
+//   const response: Sanction[] = await GetSanctions();
+//   const sanctionEmployes = response.filter((s) => s.EmployerId === id);
+//   return sanctionEmployes;
+// }
 // Create a  newCondidate
 export async function CreateSanction(newSanction: Sanction) {
   const response = await fetch(`${baseUrl}/sanctions`, {

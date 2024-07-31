@@ -18,7 +18,7 @@ function UserSlice({ user }: Props) {
         <div>
           {user && (
             <h3 className="text-lg font-bold text-gray-900 sm:text-xl">
-              monsieur {user.name}
+              monsieur {user.name.toLowerCase()}
             </h3>
           )}
 
@@ -40,8 +40,9 @@ function UserSlice({ user }: Props) {
 
       <div className="mt-4 text-xs font-medium ">
         <p className="mt-2 text-gray-700">
-          {user.name} connecté en tant qu'administrateur. il est les droits
-          complets pour créer, lire, mettre à jour et supprimer les données.
+          {user.name.toLowerCase()} connecté en tant qu'administrateur. il est
+          les droits complets pour créer, lire, mettre à jour et supprimer les
+          données.
         </p>
         <p className="mt-2 text-gray-500">
           Toutes les actions effectuées sont enregistrées avec les dates et les

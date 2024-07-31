@@ -29,8 +29,10 @@ const EmployeeList = ({ newPostesNonRep, employers, condidats }: Props) => {
   };
   const [employees, setEmployees] = useState(employers);
   const handleChange = async (formData: FormData) => {
+    // "use server";
     const value = formData.get("value") as string;
-    console.log(value);
+    // console.log(value);
+    // console.log(value);
     // const employers1 = await GetEmployersByPost(value);
     const employers1 = employees.filter((empl) => empl.posteName === value);
     console.log(employers1);
@@ -115,9 +117,9 @@ const EmployeeList = ({ newPostesNonRep, employers, condidats }: Props) => {
         </thead>
         {employees.length === 0 ? (
           <tbody className="divide-y divide-gray-200">
-            {condidats.map((condidate: Condidate, key) => (
+            {condidats.map((condidate: Condidate) => (
               <CondidateSlice
-                key={key}
+                key={condidate._id}
                 condidate={condidate}
                 isSucess={!condidate.isSucceeded}
               />
@@ -125,9 +127,9 @@ const EmployeeList = ({ newPostesNonRep, employers, condidats }: Props) => {
           </tbody>
         ) : (
           <tbody className="divide-y divide-gray-200">
-            {employees.map((ouvrier: Employer, key) => (
+            {employees.map((ouvrier: Employer) => (
               <EmployeeSlice
-                key={key}
+                key={ouvrier._id}
                 employer={ouvrier}
                 isActive={!ouvrier.isRejected}
               />

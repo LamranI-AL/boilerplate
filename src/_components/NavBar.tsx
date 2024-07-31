@@ -11,8 +11,8 @@ function NavBar({}: Props) {
   const pathname = usePathname();
   const items = [
     { key: "1", name: "Acceuil", link: "/" },
-    { key: "2", name: "Employés", link: "/dashboard" },
-    { key: "3", name: "Condidate", link: "/condidats" },
+    { key: "2", name: "ouvriers", link: "/dashboard" },
+    { key: "3", name: "candidats", link: "/condidats" },
   ];
   return (
     <header className="bg-white w-full transition-all duration-300 shadow-md">

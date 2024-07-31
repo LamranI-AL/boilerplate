@@ -9,7 +9,6 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const employers = await GetEmployers();
   return (
     <section>
       <Suspense fallback={<Loading />}>

@@ -42,14 +42,24 @@ function FormsPosteValidation({ ouvrier }: Props) {
     const result = posteSchema.safeParse(inputUser);
     if (result.success) {
       const toastId = toast.loading("Waiting...");
-      await addPosteAction(newPoste);
+      await addPosteAction(newPoste)
+        .then(() => {
+          toast.success("Poste Added", { id: toastId });
+        })
+        .catch(() => {
+          toast.error("Error", { id: toastId });
+        });
       //ca depont aussi b reponsable est ce qu'il voulez update le post depond de l'ouvrier ou non
-      await UpdateEmployer(ouvrier._id, UpdatedEmployee).then(() =>
-        console.log("update sucess")
-      );
+      await UpdateEmployer(ouvrier._id, UpdatedEmployee)
+        .then(() => {
+          toast.success("Poste employee Updated", { id: toastId });
+        })
+        .catch(() => {
+          toast.error("Error", { id: toastId });
+        });
 
-      toast.dismiss(toastId);
-      toast.success("poste added successfully");
+      // toast.dismiss(toastId);
+      // toast.success("poste added successfully");
     } else {
       let errorMsg = "";
       result.error.issues.forEach((issue) => {
@@ -85,7 +95,7 @@ function FormsPosteValidation({ ouvrier }: Props) {
                 type="text"
                 name="newPost"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter sanction"
+                placeholder="Enter le nouveau poste"
               />
             </div>
           </div>
@@ -115,7 +125,7 @@ function FormsPosteValidation({ ouvrier }: Props) {
                 type="text"
                 name="motif"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                placeholder="Enter faute"
+                placeholder="Enter motif"
               />
             </div>
           </div>

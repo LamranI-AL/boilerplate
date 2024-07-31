@@ -7,7 +7,7 @@ async function AddOuvrierPage() {
   const session = await auth();
   return (
     <div>
-      <AddOuvrier session={session} />
+      <AddOuvrier />
     </div>
   );
 }

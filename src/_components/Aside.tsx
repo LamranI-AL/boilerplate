@@ -1,6 +1,3 @@
-// "use client";
-// import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
-// import { Counter } from "@/_services/Interfaces";
 import { GetCountActiveAndArchiveEmployer } from "@/_services/GetAggrigationParams";
 import { Counter } from "@/interfaces/Interfaces";
 import {

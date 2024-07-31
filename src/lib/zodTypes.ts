@@ -140,3 +140,135 @@ export const adminSchema = z.object({
       message: "Le password  doit contenir moins de 50 caractères.",
     }),
 });
+//ouvrier
+export const ouvrierSchema = z.object({
+  first_name: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de first_name.",
+    })
+    .max(50, {
+      message: "Le first_name doit contenir moins de 50 caractères.",
+    }),
+  last_name: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de last_name.",
+    })
+    .max(50, {
+      message: "Le last_name doit contenir moins de 50 caractères.",
+    }),
+  CIN: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de CIN.",
+    })
+    .max(50, {
+      message: "Le CIN doit contenir moins de 50 caractères.",
+    }),
+  phone: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de phone.",
+    })
+    .max(50, {
+      message: "Le phone doit contenir moins de 50 caractères.",
+    }),
+  date_naissance: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de date_naissance.",
+    })
+    .max(50, {
+      message: "La date_naissance doit contenir moins de 50 caractères.",
+    }),
+  poste: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de poste.",
+    })
+    .max(50, {
+      message: "Le poste doit contenir moins de 50 caractères.",
+    }),
+});
+//condidtae
+export const condidatSchema = z.object({
+  first_name: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de first_name.",
+    })
+    .max(50, {
+      message: "Le first_name doit contenir moins de 50 caractères.",
+    }),
+  last_name: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de last_name.",
+    })
+    .max(50, {
+      message: "Le last_name doit contenir moins de 50 caractères.",
+    }),
+  CIN: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de CIN.",
+    })
+    .max(50, {
+      message: "Le CIN doit contenir moins de 50 caractères.",
+    }),
+  phone: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de phone.",
+    })
+    .max(50, {
+      message: "Le phone doit contenir moins de 50 caractères.",
+    }),
+  date_naissance: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de date_naissance.",
+    })
+    .max(50, {
+      message: "La date_naissance doit contenir moins de 50 caractères.",
+    }),
+  poste: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de poste.",
+    })
+    .max(50, {
+      message: "Le poste doit contenir moins de 50 caractères.",
+    }),
+  motif: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de motif.",
+    })
+    .max(50, {
+      message: "Le motif doit contenir moins de 50 caractères.",
+    }),
+  success_accept: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Veuillez remplir le champ de reussi de test.",
+    })
+    .max(50, {
+      message: "de reussi de test doit coche",
+    }),
+});

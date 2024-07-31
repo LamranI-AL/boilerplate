@@ -7,18 +7,16 @@ interface Props {
 }
 async function PostArchive({ ouvrier }: Props) {
   const postes: Poste[] = await GetPostByIdEmploye(ouvrier._id);
-
   return (
     <div>
-      {/* hy */}
-      {postes.length !== 0 ? (
+      {postes.length !== 0 && (
         <ul className="mt-8 grid gap-4 m-5 sm:grid-cols-2 lg:grid-cols-3">
           {postes.map((P) => {
-            // return <SanctionCard key={S._id} sanction={S} ouvrier={ouvrier} />;
             return <PostCard post={P} />;
           })}
         </ul>
-      ) : (
+      )}
+      {postes.length === 0 && (
         <div className="text-center">
           dernier port occupee pour ce moncieur est{" "}
           <span className="font-bold ">{ouvrier.posteName}</span>
