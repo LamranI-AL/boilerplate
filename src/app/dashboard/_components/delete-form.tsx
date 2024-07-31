@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 interface Props {
-  session: Session;
+  session: Session | null;
   ouvrier: Employer;
 }
 function DeleteForm({ ouvrier, session }: Props) {
@@ -20,7 +20,7 @@ function DeleteForm({ ouvrier, session }: Props) {
     };
     const UpdatedEmployee: Employer = {
       ...ouvrier,
-      UserDelete: session.user?.name ?? "",
+      UserDelete: session?.user?.name ?? "",
       deleteDate: new Date(Date.now()),
       rejectMotif: (commentContent as string) ?? "",
       isArchive: true,

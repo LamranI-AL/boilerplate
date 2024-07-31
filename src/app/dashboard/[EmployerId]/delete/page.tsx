@@ -1,6 +1,5 @@
-// "use client";
 import { GetEmployerById } from "@/_services/GetEmployers";
-import { Employer, Session } from "@/_services/Interfaces";
+import { Employer, Session } from "@/interfaces/Interfaces";
 import { auth } from "@/auth";
 import DeleteForm from "../../_components/delete-form";
 interface Props {
