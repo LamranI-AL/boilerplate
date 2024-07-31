@@ -1,6 +1,6 @@
 import EmployeeList from "@/_components/EmployersList";
 import { GetCondidates } from "@/_services/GetCondidats";
-import { Condidate } from "@/_services/Interfaces";
+import { Condidate } from "@/interfaces/Interfaces";
 import React from "react";
 
 async function page() {
@@ -11,7 +11,11 @@ async function page() {
 
   return (
     <div>
-      <EmployeeList condidats={condidateNonRetenus} employers={[]} />
+      <EmployeeList
+        condidats={condidateNonRetenus}
+        employers={[]}
+        newPostesNonRep={[]}
+      />
     </div>
   );
 }
