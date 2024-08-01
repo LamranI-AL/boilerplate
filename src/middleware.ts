@@ -1,30 +1,18 @@
 import { getToken } from "next-auth/jwt";
-// import {  } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "./auth";
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const secret = process.env.NEXTAUTH_SECRET;
-  const salt = process.env.NEXTAUTH_SALT || "default_salt"; // default
-  if (!secret || !salt) {
+  // const salt = process.env.NEXTAUTH_SALT || ""; // default
+  if (!secret) {
     throw new Error(
-      "NEXTAUTH_SECRET or NEXTAUTH_SALT is not defined in environment variables."
+      "NEXTAUTH_SECRET  is not defined in environment variables."
     );
   }
-
-  // const isAuth = await getToken({
-  //   req: request, // requête nxtjs
-  //   secret: secret,
-  //   salt: salt,
-  // });
-  const session = await auth();
-  let isAuth = false;
-  if (session === null) {
-    isAuth = false;
-  } else {
-    isAuth = true;
-  }
-
+  const isAuth = await getToken({
+    req: request, // requête nxtjs
+    secret: secret,
+  });
   const protectedPages = [
     "/dashboard/:path",
     "/dashboard",
@@ -54,5 +42,4 @@ export const config = {
     "/ajouter-condidate",
     "/ajouter-condidate",
   ],
-  // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
