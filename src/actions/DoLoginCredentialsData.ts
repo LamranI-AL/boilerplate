@@ -1,5 +1,6 @@
 "use server";
 import { signIn } from "@/auth";
+import { revalidatePath } from "next/cache";
 export async function DoLoginCredentialsData(formData: FormData) {
   try {
     const responce = await signIn("credentials", {
@@ -16,5 +17,10 @@ export async function DoLoginCredentialsData(formData: FormData) {
 export async function DoLoginCredentialsDataONE(formData: {}) {
   "use server";
   console.log(formData);
-  await signIn("credentials", formData);
+  await signIn("credentials", formData)
+    .then(() => console.log("good"))
+    .catch((err) => {
+      throw new Error("error sign in" + err);
+    });
+  revalidatePath("/");
 }

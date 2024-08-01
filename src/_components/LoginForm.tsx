@@ -17,13 +17,15 @@ export function SignIn() {
     const data = Object.fromEntries(formData.entries());
     console.log(data);
     try {
-      await DoLoginCredentialsDataONE(data as {}).then(() =>
-        console.log("oookkk")
-      );
+      await DoLoginCredentialsDataONE(data as {})
+        .then(() => console.log("oookkk"))
+        .catch((err) => {
+          console.log(err);
+        });
       setError(null);
       setIsLoading(false);
       setIsSucces(true);
-      router.push("/");
+      // router.push("/");
     } catch (err: unknown) {
       console.log(err);
       setError("Erreur de connexion");
