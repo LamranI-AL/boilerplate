@@ -25,7 +25,7 @@ export function SignIn() {
       setError(null);
       setIsLoading(false);
       setIsSucces(true);
-      // router.push("/");
+      router.push("/");
     } catch (err: unknown) {
       console.log(err);
       setError("Erreur de connexion");
