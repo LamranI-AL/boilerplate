@@ -1,5 +1,6 @@
 import { Employer } from "../interfaces/Interfaces";
-export const baseUrl = "https://macobate-api.vercel.app";
+export const baseUrl = "http://localhost:3001";
+// export const baseUrl = "https://macobate-api.vercel.app";
 // Fetch all employers
 export async function GetEmployers() {
   const response = await fetch(`${baseUrl}/employers`, {
