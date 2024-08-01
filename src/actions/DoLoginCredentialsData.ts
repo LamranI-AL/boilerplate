@@ -15,5 +15,6 @@ export async function DoLoginCredentialsData(formData: FormData) {
 }
 export async function DoLoginCredentialsDataONE(formData: {}) {
   "use server";
+  console.log(formData);
   await signIn("credentials", formData);
 }

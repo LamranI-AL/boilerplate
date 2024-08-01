@@ -13,14 +13,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET!,
-
   providers: [
     Credentials({
       name: "credentials",
       authorize: async (credentials) => {
         await connectDb();
         const user: User = await getUserFromDb(credentials?.email as string);
-        console.log(user);
+        // console.log(user);
         if (!user) {
           throw new Error("User not found.");
         } else {

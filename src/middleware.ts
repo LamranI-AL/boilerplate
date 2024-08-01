@@ -1,5 +1,10 @@
-import { getToken } from "next-auth/jwt";
+import { getToken as originalGetToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+
+type GetTokenParams = {
+  req: NextRequest;
+  secret: string;
+};
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const secret = process.env.NEXTAUTH_SECRET;
@@ -8,7 +13,10 @@ export default async function middleware(request: NextRequest) {
     throw new Error(
       "NEXTAUTH_SECRET  is not defined in environment variables."
     );
-  }
+  } // Crée une fonction wrapper qui utilise le type correct
+  const getToken = async (params: GetTokenParams) => {
+    return originalGetToken(params as any);
+  };
   const isAuth = await getToken({
     req: request, // requête nxtjs
     secret: secret,

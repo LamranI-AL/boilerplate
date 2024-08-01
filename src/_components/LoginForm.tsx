@@ -15,12 +15,15 @@ export function SignIn() {
     e.preventDefault(); // Empêcher le rechargement de la page
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
+    console.log(data);
     try {
-      await DoLoginCredentialsDataONE(data as {});
+      await DoLoginCredentialsDataONE(data as {}).then(() =>
+        console.log("oookkk")
+      );
       setError(null);
       setIsLoading(false);
       setIsSucces(true);
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: unknown) {
       console.log(err);
       setError("Erreur de connexion");
