@@ -12,7 +12,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+import { DeleteIcon, Download, Filter, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { telechargeAction } from "@/app/_utils/reports";
 interface Props {
@@ -29,11 +40,7 @@ const EmployeeList = ({ newPostesNonRep, employers, condidats }: Props) => {
   };
   const [employees, setEmployees] = useState(employers);
   const handleChange = async (formData: FormData) => {
-    // "use server";
     const value = formData.get("value") as string;
-    // console.log(value);
-    // console.log(value);
-    // const employers1 = await GetEmployersByPost(value);
     const employers1 = employees.filter((empl) => empl.posteName === value);
     console.log(employers1);
     setEmployees(employers1);
@@ -62,71 +69,55 @@ const EmployeeList = ({ newPostesNonRep, employers, condidats }: Props) => {
   }
   return (
     <div className="container mx-auto mt-10 ">
-      {employees.length === 0 ? (
-        <h1 className="text-2xl font-bold mb-5">Liste des Condidats</h1>
-      ) : (
-        <div>
-          <form action={handleChange} className="flex">
-            <div className="w-full">
-              <Select name="value">
-                <SelectTrigger className="w-[180px]">
-                  {" "}
-                  <Filter className="text-sm" />
-                  <SelectValue placeholder="Select a poste" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel className="flex">Postes</SelectLabel>
-                    {newPostesNonRep.map((poste) => {
-                      return <SelectItem value={poste}>{poste}</SelectItem>;
-                    })}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-            <Button type="submit" className="mx-2">
-              Filter
-            </Button>
-          </form>
-          <h1 className="text-2xl font-bold mb-5">Liste des Ouvriers</h1>
-        </div>
+      {/* BLOCKE DE filter */}
+      {employees.length === 0 ? null : (
+        <form action={handleChange} className="flex">
+          <div className="w-1/2l">
+            <Select name="value">
+              <SelectTrigger className="w-[500px]">
+                {" "}
+                <Filter className="text-sm" />
+                <SelectValue placeholder="Select a poste" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel className="flex">Postes</SelectLabel>
+                  {newPostesNonRep.map((poste) => {
+                    return <SelectItem value={poste}>{poste}</SelectItem>;
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button type="submit" className="mx-2">
+            Filter
+          </Button>
+        </form>
       )}
-      <table className="min-w-full divide-y-2 divide-gray-200 my-2 bg-white text-sm">
-        <thead className="ltr:text-left rtl:text-right">
-          <tr>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Prénom
-            </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Nom
-            </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              CIN
-            </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Date de Naissance
-            </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Poste
-            </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Numéro de Téléphone
-            </th>
-            <th className="px-4 py-2"></th>
-          </tr>
-        </thead>
+      {/* blockoftable */}
+      <Table>
+        <TableCaption>A list</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">CIN</TableHead>
+            <TableHead>Prénom</TableHead>
+            <TableHead>Nom</TableHead>
+            <TableHead>Date de Naissance</TableHead>
+            <TableHead>Numéro de Téléphone</TableHead>
+            <TableHead>Poste</TableHead>
+            <TableHead>plus d'infos</TableHead>
+            <TableHead className="text-right">OP</TableHead>
+          </TableRow>
+        </TableHeader>
+
         {employees.length === 0 ? (
-          <tbody className="divide-y divide-gray-200">
+          <TableBody>
             {condidats.map((condidate: Condidate) => (
-              <CondidateSlice
-                key={condidate._id}
-                condidate={condidate}
-                isSucess={!condidate.isSucceeded}
-              />
+              <CondidateSlice key={condidate._id} condidate={condidate} />
             ))}
-          </tbody>
+          </TableBody>
         ) : (
-          <tbody className="divide-y divide-gray-200">
+          <TableBody>
             {employees.map((ouvrier: Employer) => (
               <EmployeeSlice
                 key={ouvrier._id}
@@ -134,28 +125,43 @@ const EmployeeList = ({ newPostesNonRep, employers, condidats }: Props) => {
                 isActive={!ouvrier.isRejected}
               />
             ))}
-          </tbody>
+          </TableBody>
         )}
-      </table>
-
+        {/* </TableBody> */}
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={7}>Total</TableCell>
+            {employees.length === 0 ? (
+              <TableCell className="text-right flex">
+                {condidats.length} <User className="text-xs" />
+              </TableCell>
+            ) : (
+              <TableCell className="text-right flex">
+                {employees.length}
+                <User className="text-xs" />{" "}
+              </TableCell>
+            )}
+          </TableRow>
+        </TableFooter>
+      </Table>
+      {/* telechrge block  */}
       {employees.length === 0 ? (
         <Button
           onClick={telechargeActionCondidats}
-          className="w-full m-2 text-xl font-bold "
+          className="w-full m-2 text-2xl font-bold "
           variant="link"
         >
-          télécharger tous les condidats
+          <Download />
         </Button>
       ) : (
         <Button
           onClick={telechargeActionEmployee}
-          className="w-full m-2 text-xl font-bold "
+          className="w-full m-2 text-2xl font-bold "
           variant="link"
         >
-          télécharger tous les employers
+          <Download />
         </Button>
       )}
-      {/* {  } */}
     </div>
   );
 };

@@ -69,7 +69,7 @@ function CondidateCard({ condidate }: CondidateCardProps) {
         </div>
 
         <div className="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-          <dt className="font-medium text-gray-900">motif de post occupé</dt>
+          <dt className="font-medium text-gray-900">Comment passer le test</dt>
           <dd className="text-gray-700 sm:col-span-2">
             {condidate.motifApply.length !== 0 ? (
               condidate.motifApply

@@ -1,5 +1,5 @@
 import EmployeeList from "@/_components/EmployersList";
-import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
+// import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
 import { GetEmployers } from "@/_services/GetEmployers";
 import { Employer, Poste } from "@/interfaces/Interfaces";
 import React from "react";
@@ -24,12 +24,14 @@ async function page() {
   if (employers.length !== 0) {
     employersActive = employers.filter(
       (employer: Employer) =>
-        employer.isRejected === false && employer.isArchive === false
+        employer.isRejected === false &&
+        employer.isArchive === false &&
+        employer.isInBlackList === false
     );
   }
   return (
     <div>
-      <StatistiqueCounterOfActiveEmployee isActive={true} />
+      {/* <StatistiqueCounterOfActiveEmployee isActive={true} /> */}
       <EmployeeList
         newPostesNonRep={newPostesNonRep}
         employers={employersActive}

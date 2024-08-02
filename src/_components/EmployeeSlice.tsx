@@ -1,8 +1,23 @@
 "use client";
-import { formatDate } from "@/app/_utils/formatDate";
+import { Button } from "@/components/ui/button";
+import { TableCell, TableRow } from "@/components/ui/table";
 import { Employer } from "@/interfaces/Interfaces";
+import { EyeIcon, Trash } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { UpdateEmployer } from "@/_services/GetEmployers";
 
 interface EmployeeSliceProps {
   employer: Employer;
@@ -13,89 +28,89 @@ const EmployesList: React.FC<EmployeeSliceProps> = ({
   employer,
   isActive,
 }: EmployeeSliceProps) => {
+  const router = useRouter();
+  const newEmployeeRejected: Employer = {
+    ...employer,
+    isArchive: true,
+    isRejected: true,
+  };
+  const newEmployeeInBlackList: Employer = {
+    ...employer,
+    isInBlackList: true,
+  };
+  const archiverEmployee = async () => {
+    try {
+      await UpdateEmployer(employer._id, newEmployeeRejected);
+      router.push("/dashboard/list");
+    } catch (error) {
+      console.log("error : " + error);
+    }
+  };
+  const blacklistedEmployee = async () => {
+    try {
+      await UpdateEmployer(employer._id, newEmployeeInBlackList);
+      router.push("/dashboard/list");
+    } catch (error) {
+      console.log("error : " + error);
+    }
+  };
+  const getDate = () => {
+    const now = new Date(employer.dateNaissance);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+  };
   return (
-    <tr>
-      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-        {employer.FerstName}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {employer.lastName.toUpperCase()}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {employer.CIN}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {formatDate(employer.dateNaissance)}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {employer.posteName}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {employer.phoneNumber}
-      </td>
-      <td className="whitespace-nowrap flex gap-3 px-4 py-2 ">
-        <Link
-          className="group relative inline-flex items-center overflow-hidden rounded bg-zinc-700 px-6 py-2 text-white focus:outline-none focus:ring active:bg-zinc-500"
-          href={`/dashboard/${employer._id}/view`}
-        >
-          <span className="absolute -end-full transition-all group-hover:end-4">
-            <svg
-              className="size-5 rtl:rotate-180"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </span>
-
-          <span className="text-sm font-medium transition-all group-hover:me-4">
-            {" "}
-            Voir{" "}
-          </span>
+    <TableRow key={employer._id}>
+      <TableCell className="font-medium">{employer.CIN}</TableCell>
+      <TableCell>{employer.FerstName.toLowerCase()}</TableCell>
+      <TableCell>{employer.lastName.toUpperCase()}</TableCell>
+      <TableCell>{getDate()}</TableCell>
+      <TableCell>{employer.phoneNumber}</TableCell>
+      <TableCell>{employer.posteName}</TableCell>
+      <TableCell className="">
+        <Link href={`/dashboard/${employer._id}/view`}>
+          <EyeIcon className="text-center text-cyan-900" />
         </Link>
-        {isActive === true ? (
-          <Link
-            className="group relative inline-flex items-center overflow-hidden rounded border border-current mx-3 px-6 py-2 text-red-800 focus:outline-none focus:ring active:text-red-700"
-            href={`/dashboard/${employer._id}/delete`}
-          >
-            <span className="absolute -end-full transition-all group-hover:end-4">
-              <svg
-                className="size-5 rtl:rotate-180"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </span>
-
-            <span className="text-sm font-medium transition-all group-hover:me-4">
-              {" "}
-              supprimer{" "}
-            </span>
-          </Link>
-        ) : (
-          <div className="mt-4 flex flex-wrap gap-1">
-            <span className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600">
-              admin : {employer.UserDelete}
-            </span>
-          </div>
-        )}
-      </td>
-    </tr>
+      </TableCell>
+      <TableCell className="text-right">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="link" className="bg-transparent">
+              <Trash className="text-red-800" />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
+              <AlertDialogDescription>
+                En cliquant sur 'archiver', ce candidat sera automatiquement
+                considéré comme un ancien employé de Macobate et non plus comme
+                un employé actuel
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <div className="flex justify-end gap-5">
+                <AlertDialogAction
+                  onClick={blacklistedEmployee}
+                  className="text-red-800 border border-red-800 hover:bg-red-300 bg-inherit"
+                >
+                  ajouter au list noir
+                </AlertDialogAction>
+                <AlertDialogCancel>exit</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={archiverEmployee}
+                  className="text-red-950 hover:bg-red-100 bg-inherit"
+                >
+                  archiver
+                </AlertDialogAction>
+              </div>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </TableCell>
+    </TableRow>
   );
 };
 

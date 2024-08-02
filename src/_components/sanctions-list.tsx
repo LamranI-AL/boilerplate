@@ -2,26 +2,80 @@ import { GetSanctionByIdEmploye } from "@/_services/GetSanctions";
 import { Employer, Sanction } from "@/interfaces/Interfaces";
 import React from "react";
 import SanctionCard from "./sanction-card";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 interface Props {
   ouvrier: Employer;
 }
 async function SanctionList({ ouvrier }: Props) {
   const sanctions: Sanction[] = await GetSanctionByIdEmploye(ouvrier._id);
-  console.log(sanctions);
   return (
-    <div>
-      {sanctions.length !== 0 && (
-        <ul className="mt-8 grid gap-4 m-5 sm:grid-cols-2 lg:grid-cols-3">
-          {sanctions.map((S) => {
-            return <SanctionCard key={S._id} sanction={S} ouvrier={ouvrier} />;
-          })}
-        </ul>
-      )}
-      <div className="text-green-500 text-center font-bold ">
-        pas de sanctions a ce monsieur
-      </div>
-    </div>
+    <Table>
+      <TableCaption>
+        A list des sanctions de {ouvrier.FerstName.toLowerCase()}{" "}
+        {ouvrier.lastName.toLowerCase()}
+      </TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="">sanction</TableHead>
+          <TableHead>date</TableHead>
+          <TableHead className="text-right">faut</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sanctions.map((sanction) => (
+          <SanctionCard sanction={sanction} ouvrier={ouvrier} />
+        ))}
+      </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell colSpan={2}>Total des sanctions</TableCell>
+          <TableCell className="text-right">{sanctions.length}</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
   );
 }
 
 export default SanctionList;
+
+// export function TableDemo() {
+//   return (
+//     <Table>
+//       <TableCaption>A list of your recent invoices.</TableCaption>
+//       <TableHeader>
+//         <TableRow>
+//           <TableHead className="w-[100px]">Invoice</TableHead>
+//           <TableHead>Status</TableHead>
+//           <TableHead>Method</TableHead>
+//           <TableHead className="text-right">Amount</TableHead>
+//         </TableRow>
+//       </TableHeader>
+//       <TableBody>
+//         {invoices.map((invoice) => (
+//           <TableRow key={invoice.invoice}>
+//             <TableCell className="font-medium">{invoice.invoice}</TableCell>
+//             <TableCell>{invoice.paymentStatus}</TableCell>
+//             <TableCell>{invoice.paymentMethod}</TableCell>
+//             <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+//           </TableRow>
+//         ))}
+//       </TableBody>
+//       <TableFooter>
+//         <TableRow>
+//           <TableCell colSpan={3}>Total</TableCell>
+//           <TableCell className="text-right">$2,500.00</TableCell>
+//         </TableRow>
+//       </TableFooter>
+//     </Table>
+//   );
+// }

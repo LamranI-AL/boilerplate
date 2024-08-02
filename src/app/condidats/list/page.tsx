@@ -13,7 +13,7 @@ async function page() {
   return (
     <div>
       <EmployeeList
-        newPostesNonRep={[""]}
+        newPostesNonRep={[]}
         condidats={condidateRetenus}
         employers={[]}
       />

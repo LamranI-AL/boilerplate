@@ -2,6 +2,7 @@
 import { creatCondidateAction } from "@/actions/creatCondidateAction";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { condidatSchema } from "@/lib/zodTypes";
 import { UserPlusIcon } from "lucide-react";
 import Image from "next/image";
@@ -130,7 +131,7 @@ const AddCondidate = () => {
                   <Input type="date" id="date" name="date_naissance" />
                 </div>
                 {/* poste */}
-                <div className="col-span-6 sm:col-span-3">
+                <div className="col-span-6">
                   <Label className="block text-sm font-medium text-gray-700">
                     {" "}
                     Poste occupé{" "}
@@ -138,16 +139,16 @@ const AddCondidate = () => {
 
                   <Input type="text" id="Poste_occupé" name="poste" />
                 </div>
-                {/* motif */}
-                <div className="col-span-6 sm:col-span-3">
+                {/* commentaire  */}
+                <div className="col-span-6 ">
                   <Label
                     htmlFor="motif"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Motif d'application
+                    Remarques sur la façon de passer le test
                   </Label>
 
-                  <Input type="text" id="motif" name="motif" />
+                  <Textarea rows={4} id="motif" name="motif" />
                 </div>
                 {/* Résultat du test */}
                 <div className="col-span-6 sm:col-span-3">

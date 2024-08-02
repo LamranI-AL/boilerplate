@@ -1,63 +1,84 @@
-import { formatDate } from "@/app/_utils/formatDate";
+"use client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { TableCell, TableRow } from "@/components/ui/table";
 import { Condidate } from "@/interfaces/Interfaces";
+import { Trash, EyeIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
-interface EmployeeSliceProps {
+interface CondidatSliceProps {
   condidate: Condidate;
-  isSucess: boolean;
 }
 
-function CondidateSlice({ condidate, isSucess }: EmployeeSliceProps) {
+export default function CondidateSlice({ condidate }: CondidatSliceProps) {
+  const deletCondidate = async () => {
+    const router = useRouter();
+    const newCondidat: Condidate = {
+      ...condidate,
+    };
+    try {
+    } catch (error) {}
+  };
+  const getDate = () => {
+    const now = new Date(condidate.dateNaissance);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+  };
   return (
-    <tr>
-      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-        {condidate.firstName}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {condidate.lastName.toUpperCase()}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {condidate.CIN}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {formatDate(condidate.dateNaissance)}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {condidate.posteApplique}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-        {condidate.phoneNumber}
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 ">
-        <Link
-          className="group relative inline-flex items-center overflow-hidden rounded bg-zinc-700 px-6 py-2 text-white focus:outline-none focus:ring active:bg-zinc-500"
-          href={`/condidats/${condidate._id}/view`}
-        >
-          <span className="absolute -end-full transition-all group-hover:end-4">
-            <svg
-              className="size-5 rtl:rotate-180"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </span>
-
-          <span className="text-sm font-medium transition-all group-hover:me-4">
-            {" "}
-            Voir{" "}
-          </span>
+    <TableRow key={condidate._id}>
+      <TableCell className="font-medium">{condidate.CIN}</TableCell>
+      <TableCell>{condidate.firstName.toLowerCase()}</TableCell>
+      <TableCell>{condidate.lastName.toUpperCase()}</TableCell>
+      <TableCell>{getDate()}</TableCell>
+      <TableCell>{condidate.phoneNumber}</TableCell>
+      <TableCell>{condidate.posteApplique}</TableCell>
+      <TableCell className="">
+        <Link href={`/condidats/${condidate._id}/view`}>
+          <EyeIcon className="text-center text-cyan-900" />
         </Link>
-      </td>
-    </tr>
+      </TableCell>
+      <TableCell className="text-right">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="link" className="bg-transparent">
+              <Trash className="text-red-800" />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
+              <AlertDialogDescription>
+                En cliquant sur 'archiver', ce candidat sera automatiquement
+                considéré comme un ancien condidat de macobate
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <form action={deletCondidate} className="flex justify-end gap-5">
+                <AlertDialogCancel>exit</AlertDialogCancel>
+                <AlertDialogAction
+                  className="text-red-950 hover:bg-red-100 bg-inherit"
+                  type="submit"
+                >
+                  archiver
+                </AlertDialogAction>
+              </form>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </TableCell>
+    </TableRow>
   );
 }
-
-export default CondidateSlice;

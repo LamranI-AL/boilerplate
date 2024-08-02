@@ -23,12 +23,14 @@ async function ArchiveEmployersPage() {
   if (employers.length !== 0) {
     employersActive = employers.filter(
       (employer: Employer) =>
-        employer.isRejected === true && employer.isArchive === true
+        employer.isRejected === true &&
+        employer.isArchive === true &&
+        employer.isInBlackList === false
     );
   }
   return (
     <div>
-      <StatistiqueCounterOfActiveEmployee isActive={false} />
+      {/* <StatistiqueCounterOfActiveEmployee isActive={false} /> */}
       <EmployeeList
         newPostesNonRep={newPostesNonRep}
         employers={employersActive}

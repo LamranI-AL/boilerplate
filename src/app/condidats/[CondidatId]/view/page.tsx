@@ -31,13 +31,12 @@ async function page({ params }: Props) {
   const session = await getServerSession();
   const reEmployeeOne = async (formData: FormData) => {
     "use server";
-    console.log("is ok");
+    // console.log("is ok");
     const newEmployee: Employer | any = {
       CIN: condidate.CIN,
       isArchive: false,
       isRejected: false,
       creatUser: (session?.user?.name as string) ?? "null",
-
       FerstName: condidate.firstName,
       lastName: condidate.lastName,
       email: condidate.email,
@@ -63,7 +62,7 @@ async function page({ params }: Props) {
       });
     await CreatePost(newPoste)
       .then(() => {
-        console.log("creat is ok ");
+        console.log("creat post is ok ");
       })
       .catch((err) => {
         console.log(err);
