@@ -1,14 +1,14 @@
 import { GetUserByID } from "@/_services/GetCurrentUser";
-import { auth } from "@/auth";
 import UpdateUserForm from "../_components/update-user";
 import { User } from "@/interfaces/Interfaces";
+import { getServerSession } from "next-auth";
 interface Props {
   params: {
     userId: string;
   };
 }
 async function page({ params }: Props) {
-  const session = await auth();
+  const session = await getServerSession();
   const user: User = await GetUserByID(params.userId.toString());
   console.log(user);
   if (!user) {

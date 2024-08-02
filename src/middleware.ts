@@ -1,53 +1,50 @@
-import { getToken as originalGetToken } from "next-auth/jwt";
+import { getToken } from "next-auth/jwt";
+import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
-type GetTokenParams = {
-  req: NextRequest;
-  secret: string;
-};
-export default async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const secret = process.env.NEXTAUTH_SECRET;
-  // const salt = process.env.NEXTAUTH_SALT || ""; // default
-  if (!secret) {
-    throw new Error(
-      "NEXTAUTH_SECRET  is not defined in environment variables."
+export default withAuth(
+  async function middleware(request: NextRequest) {
+    const pathName = request.nextUrl.pathname;
+    const isAuth = await getToken({ req: request }); // Récupère le token d'authentification
+
+    const protectedRoutes = [
+      // "/chat/profile",
+      "/dashboard",
+      "/condidats",
+      "/",
+      "/contact",
+    ];
+
+    // Vérifie si la route actuelle est protégée
+    const isProtectedRoute = protectedRoutes.some((route) =>
+      pathName.startsWith(route)
     );
-  } // Crée une fonction wrapper qui utilise le type correct
-  const getToken = async (params: GetTokenParams) => {
-    return originalGetToken(params as any);
-  };
-  const isAuth = await getToken({
-    req: request, // requête nxtjs
-    secret: secret,
-  });
-  const protectedPages = [
-    "/dashboard/:path",
-    "/dashboard",
-    "/ajouter-ouvrier",
-    "/ajouter-condidate",
-    "/condidats",
-    "/condidats/:path",
-    "/",
-  ];
-  const isProtectedRoute = protectedPages.some((route) => {
-    return pathname.startsWith(route);
-  });
-  if (isProtectedRoute && !isAuth) {
-    console.log("not auth");
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+
+    // Redirection si l'utilisateur n'est pas authentifié et tente d'accéder à une route protégée
+    if (!isAuth && isProtectedRoute) {
+      return NextResponse.redirect(new URL("/auth/signin", request.url));
+    }
+
+    // Retourne NextResponse.next() pour laisser passer la requête si autorisée
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      async authorized({ req }) {
+        // Ce callback peut être personnalisé pour définir la logique d'autorisation
+        const token = await getToken({ req });
+        return !!token; // Retourne true si l'utilisateur est authentifié
+      },
+    },
   }
-  console.log("is auth");
-  return NextResponse.next();
-}
+);
+
 export const config = {
   matcher: [
-    "/dashboard/:path",
-    "/dashboard",
-    "/ajouter-ouvrier",
+    "/dashboard/:path*",
+    "/auth/:path*",
+    "/api/:path*",
     "/condidats",
     "/",
-    "/ajouter-condidate",
-    "/ajouter-condidate",
   ],
 };

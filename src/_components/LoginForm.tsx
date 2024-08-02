@@ -1,10 +1,11 @@
 "use client";
-import { DoLoginCredentialsDataONE } from "@/actions/DoLoginCredentialsData";
+// import { DoLoginCredentialsDataONE } from "@/actions/DoLoginCredentialsData";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AlertDanger from "./alert-danger";
 import AlertSucces from "./alertSucces";
 import ButtonLoader from "./ButtonLoader";
+import { signIn } from "next-auth/react";
 export function SignIn() {
   const [error, setError] = useState<string | null>(null);
   const [isSucces, setIsSucces] = useState<boolean | null>(false);
@@ -17,11 +18,16 @@ export function SignIn() {
     const data = Object.fromEntries(formData.entries());
     console.log(data);
     try {
-      await DoLoginCredentialsDataONE(data as {})
-        .then(() => console.log("oookkk"))
-        .catch((err) => {
-          console.log(err);
-        });
+      await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+      });
+      // await DoLoginCredentialsDataONE(data as {})
+      //   .then(() => console.log("oookkk"))
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
       setError(null);
       setIsLoading(false);
       setIsSucces(true);

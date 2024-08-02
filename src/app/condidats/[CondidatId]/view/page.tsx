@@ -1,8 +1,4 @@
-import {
-  DeleteCondidate,
-  GetCondidateById,
-  UpdateCondidate,
-} from "@/_services/GetCondidats";
+import { GetCondidateById, UpdateCondidate } from "@/_services/GetCondidats";
 import { Condidate, Employer, Poste } from "@/interfaces/Interfaces";
 import Link from "next/link";
 import React from "react";
@@ -22,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { CreateEmployer } from "@/_services/GetEmployers";
 import { CreatePost } from "@/_services/GetPosts";
 import { revalidatePath } from "next/cache";
-import { auth } from "@/auth";
+import { getServerSession } from "next-auth";
 interface Props {
   params: {
     CondidatId: number;
@@ -32,7 +28,7 @@ async function page({ params }: Props) {
   const condidate: Condidate = await GetCondidateById(
     params.CondidatId.toString()
   );
-  const session = await auth();
+  const session = await getServerSession();
   const reEmployeeOne = async (formData: FormData) => {
     "use server";
     console.log("is ok");

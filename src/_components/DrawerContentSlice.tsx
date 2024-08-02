@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
 import {
   Card,
   CardContent,

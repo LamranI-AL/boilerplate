@@ -1,6 +1,6 @@
 import UpdateCondidateSlice from "@/_components/UpdateCondidate";
-import { auth } from "@/auth";
 import { Session } from "@/interfaces/Interfaces";
+import { getServerSession } from "next-auth";
 import React from "react";
 interface Props {
   params: {
@@ -8,7 +8,7 @@ interface Props {
   };
 }
 async function page({ params }: Props) {
-  const session: Session | any = await auth();
+  const session: Session | any = await getServerSession();
   return (
     <UpdateCondidateSlice CondidatId={params.CondidatId} session={session} />
   );

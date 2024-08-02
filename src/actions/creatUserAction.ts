@@ -1,10 +1,10 @@
 "use server";
 import { CreateEmployer } from "@/_services/GetEmployers";
-import { auth } from "@/auth";
 import { Employer, Session } from "@/interfaces/Interfaces";
+import { getServerSession } from "next-auth";
 
 export const creatUserAction = async (formData: FormData) => {
-  const session: Session | any = await auth();
+  const session: Session | any = getServerSession();
   const first_name = formData.get("first_name");
   const last_name = formData.get("last_name");
   const CIN = formData.get("CIN");
@@ -24,7 +24,7 @@ export const creatUserAction = async (formData: FormData) => {
     raison: "",
     createdAt: new Date(Date.now()),
     updateAt: new Date(),
-    creatUser: session.user?.name ?? "",
+    creatUser: session?.user?.name ?? "",
     deleteDate: new Date(""),
     UserDelete: "",
     UserUpdate: "",

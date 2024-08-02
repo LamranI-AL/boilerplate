@@ -1,7 +1,6 @@
-// "use client";
 import UpdateEmployerSlice from "@/_components/UpdateEmployer";
-import { auth } from "@/auth";
 import { Session } from "@/interfaces/Interfaces";
+import { getServerSession } from "next-auth";
 import React from "react";
 interface Props {
   params: {
@@ -10,7 +9,7 @@ interface Props {
 }
 
 async function page({ params }: Props) {
-  const session: Session | any = await auth();
+  const session: Session | any = await getServerSession();
   return (
     <UpdateEmployerSlice employerId={params.EmployerId} session={session} />
   );

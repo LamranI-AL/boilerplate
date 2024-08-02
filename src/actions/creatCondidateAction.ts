@@ -1,10 +1,10 @@
 "use server";
 import { CreateCondidate } from "@/_services/GetCondidats";
-import { auth } from "@/auth";
 import { Condidate, Session } from "@/interfaces/Interfaces";
+import { getServerSession } from "next-auth";
 
 export const creatCondidateAction = async (formData: FormData) => {
-  const session: Session | any = await auth();
+  const session = await getServerSession();
   const first_name = formData.get("first_name") as string;
   const last_name = formData.get("last_name") as string;
   const CIN = formData.get("CIN") as string;
@@ -26,7 +26,7 @@ export const creatCondidateAction = async (formData: FormData) => {
     motifApply: motif,
     creatDate: new Date(Date.now()),
     updateDate: new Date(),
-    creatUser: session.user?.name ?? "",
+    creatUser: session?.user?.name ?? "",
     deleteDate: new Date(""),
     isSucceeded: isSucceeded,
     isArchived: false,
