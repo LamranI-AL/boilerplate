@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { UpdateEmployer } from "@/_services/GetEmployers";
+import { useSession } from "next-auth/react";
 
 interface EmployeeSliceProps {
   employer: Employer;
@@ -28,15 +29,20 @@ const EmployesList: React.FC<EmployeeSliceProps> = ({
   employer,
   isActive,
 }: EmployeeSliceProps) => {
+  const { data: session } = useSession();
   const router = useRouter();
   const newEmployeeRejected: Employer = {
     ...employer,
     isArchive: true,
     isRejected: true,
+    deleteDate: new Date(Date.now()),
+    UserDelete: session?.user?.name as string,
   };
   const newEmployeeInBlackList: Employer = {
     ...employer,
     isInBlackList: true,
+    deleteDate: new Date(Date.now()),
+    UserDelete: session?.user?.name as string,
   };
   const archiverEmployee = async () => {
     try {
@@ -75,40 +81,44 @@ const EmployesList: React.FC<EmployeeSliceProps> = ({
         </Link>
       </TableCell>
       <TableCell className="text-right">
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="link" className="bg-transparent">
-              <Trash className="text-red-800" />
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
-              <AlertDialogDescription>
-                En cliquant sur 'archiver', ce candidat sera automatiquement
-                considéré comme un ancien employé de Macobate et non plus comme
-                un employé actuel
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <div className="flex justify-end gap-5">
-                <AlertDialogAction
-                  onClick={blacklistedEmployee}
-                  className="text-red-800 border border-red-800 hover:bg-red-300 bg-inherit"
-                >
-                  ajouter au list noir
-                </AlertDialogAction>
-                <AlertDialogCancel>exit</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={archiverEmployee}
-                  className="text-red-950 hover:bg-red-100 bg-inherit"
-                >
-                  archiver
-                </AlertDialogAction>
-              </div>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        {employer.isRejected === true ? (
+          <div className="text-[10px] text-center">{employer.UserDelete}</div>
+        ) : (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="link" className="bg-transparent">
+                <Trash className="text-red-800" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  En cliquant sur 'archiver', ce candidat sera automatiquement
+                  considéré comme un ancien employé de Macobate et non plus
+                  comme un employé actuel
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <div className="flex justify-end gap-5">
+                  <AlertDialogAction
+                    onClick={blacklistedEmployee}
+                    className="text-red-800 border border-red-800 hover:bg-red-300 bg-inherit"
+                  >
+                    ajouter au list noir
+                  </AlertDialogAction>
+                  <AlertDialogCancel>exit</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={archiverEmployee}
+                    className="text-red-950 hover:bg-red-100 bg-inherit"
+                  >
+                    archiver
+                  </AlertDialogAction>
+                </div>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </TableCell>
     </TableRow>
   );

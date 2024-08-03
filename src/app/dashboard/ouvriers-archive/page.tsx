@@ -1,5 +1,5 @@
 import EmployeeList from "@/_components/EmployersList";
-import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
+// import StatistiqueCounterOfActiveEmployee from "@/_components/StatistiqueCounterOfActiveEmployee";
 import { GetEmployers } from "@/_services/GetEmployers";
 import { GetPosts } from "@/_services/GetPosts";
 import { Employer, Poste } from "@/interfaces/Interfaces";
